@@ -1,3 +1,5 @@
+import { router, routes } from "../../main";
+
 export default function loadingPage() {
   document.querySelector("#app").innerHTML = `
         <div class="flex flex-col items-center h-screen">
@@ -23,4 +25,5 @@ export default function loadingPage() {
       </div>
 
   `;
+  setTimeout(router.navigate(routes.welcom), 3000);
 }
