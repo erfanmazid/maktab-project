@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         inter: ["Inter"],
       },
+      backgroundImage: {
+        welcome: "url('./src/img/welcom/bg.png')",
+      },
     },
   },
   plugins: [],
