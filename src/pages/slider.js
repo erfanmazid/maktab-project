@@ -16,8 +16,8 @@ export function slider() {
                 </div>
             </li>
 			<li class="splide__slide">
-                <img src="src/img/welcom/3.png" alt="">
-                <div class="p-6 flex justify-center class="-mt-5" items-center">
+                <img src="src/img/welcom/3.png" class="-mt-5" alt="">
+                <div class="p-6 flex justify-center items-center">
                   <p class="font-semibold text-[32px] text-center">Let’s fulfill your fashion needs with shoearight now!</p>
                 </div>
             </li>
