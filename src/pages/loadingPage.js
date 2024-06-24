@@ -1,7 +1,13 @@
-import { router, routes } from "../../main";
+import Splide from "@splidejs/splide";
+import { slider } from "./slider";
+import { root, router, routes } from "../../main";
 
 export default function loadingPage() {
-  document.querySelector("#app").innerHTML = `
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (welcome) {
+    router.navigate(routes.signup);
+  } else {
+    document.querySelector("#app").innerHTML = `
         <div class="flex flex-col items-center h-screen">
         <div class="flex items-center gap-x-2 mt-[360px] mb-[250px]">
           <div
@@ -25,7 +31,8 @@ export default function loadingPage() {
       </div>
 
   `;
-  setTimeout(welcomePage, 3000);
+    setTimeout(welcomePage, 3000);
+  }
 }
 function welcomePage() {
   document.querySelector("#app").innerHTML = `
@@ -47,5 +54,66 @@ function welcomePage() {
   </div>
   
       `;
-  setTimeout(welcomePage, 10000);
+  setTimeout(option, 5000);
 }
+
+function option() {
+  //   document.querySelector("#app").innerHTML = `
+  // <div class="flex flex-col h-screen font-inter" id="mmd">
+  //   <div class="-mt-6 flex " >
+  //     <div id="nmd" class="-mt-16 flex w-[300%] overflow-hidden" >
+  //       <img src="./src/img/welcom/1.png" alt="" class="w-full"/>
+  //       <img src="./src/img/welcom/2.png" alt="" class="w-full"/>
+  //       <img src="./src/img/welcom/3.png" alt="" class="w-full"/>
+  //     </div>
+  //   </div>
+  //   <div class="p-6 flex flex-col justify-between">
+  //     <p class="text-[32px] font-semibold text-center">
+  //       We provide high quality products just for you
+  //     </p>
+  //     <div class="flex gap-3 justify-center items-center mt-[68px]">
+  //       <div class="bg-black w-[30px] h-[3px]"></div>
+  //       <div class="bg-gray-500 w-[30px] h-[3px]"></div>
+  //       <div class="bg-gray-500 w-[30px] h-[3px]"></div>
+  //     </div>
+  //     <div
+  //       onclick="test()"
+  //       class="w-full bg-[#212529] rounded-full h-[50px] flex justify-center items-center mt-12"
+  //     >
+  //       <p class="text-[14px] text-white">next</p>
+  //     </div>
+  //   </div>
+  // </div>
+
+  //     `;
+  slider();
+  const splide = new Splide(".splide", {
+    classes: {
+      arrows: "splide__arrows hidden",
+      page: "splide__pagination__page custom-page",
+    },
+  }).mount();
+
+  splide.on("pagination:updated", () => {
+    if (splide.index + 1 == 3) {
+      root.querySelector("#next-btn").innerHTML = "Get Started";
+    } else {
+      root.querySelector("#next-btn").innerHTML = "Next";
+    }
+  });
+
+  root.querySelector("#next-btn").addEventListener("click", () => {
+    if (splide.index + 1 == 3) {
+      router.navigate(routes.signup);
+      localStorage.setItem("welcome", true);
+    } else {
+      splide.go(splide.index + 1);
+    }
+  });
+}
+
+window.test = () => {
+  console.log("hi");
+  const nmd = document.querySelector("#nmd");
+  nmd.classList.add("-ml-[100%]");
+};
