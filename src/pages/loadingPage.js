@@ -5,7 +5,7 @@ import { root, router, routes } from "../../main";
 export default function loadingPage() {
   const welcome = localStorage.getItem("welcome") ?? false;
   if (welcome) {
-    router.navigate(routes.signup);
+    router.navigate(routes.login);
   } else {
     document.querySelector("#app").innerHTML = `
         <div class="flex flex-col items-center h-screen">
