@@ -10,18 +10,22 @@ export function signupPage() {
   <div class="flex flex-col items-center justify-center gap-10">
     <p class="text-[32px] font-semibold mt-8">Signup New Account</p>
     <div class="flex flex-col gap-y-5">
-      <div class="relative flex justify-center items-center text-[#6C757D]">
+      <div class="relative flex justify-center items-center text-[#6C757D]" id="email-div">
         <i class="fa-solid fa-envelope absolute left-[14px]"></i>
         <input
           type="email"
           placeholder="Email"
+          id="email"
+          oninput="email()"
           class="bg-gray-100/50 h-[37px] w-[380px] py-2 px-10 placeholder:text-[14px] rounded"
         />
       </div>
-      <div class="relative flex justify-center items-center text-[#6C757D]">
+      <div class="relative flex justify-center items-center text-[#6C757D]" id="pass-div">
         <i class="fa-solid fa-lock absolute left-[14px]"></i>
         <input
           type="password"
+          oninput="pass()"
+          id="pass"
           placeholder="Password"
           class="bg-gray-100/50 h-[37px] w-[380px] py-2 px-10 placeholder:text-[14px] rounded focus-visible:border-black"
         />
@@ -67,7 +71,7 @@ export function signupPage() {
     </div>
   </div>
   <div class="flex justify-center mt-52">
-    <button class="w-[380px] h-[47px] rounded-[30px] bg-[#868d93] text-white">
+    <button class="w-[380px] h-[47px] rounded-[30px] bg-[#868d93] text-white" id="btn">
       Sign up
     </button>
   </div>
@@ -75,3 +79,32 @@ export function signupPage() {
 
   `;
 }
+
+window.pass = () => {
+  let input = document.querySelector("#pass");
+  let div = document.querySelector("#pass-div");
+  let btn = document.querySelector("#btn");
+  if (input.value) {
+    div.classList.remove("text-[#6C757D]");
+    div.classList.add("text-black");
+    btn.classList.remove("bg-[#868d93]");
+    btn.classList.add("bg-black");
+  } else {
+    div.classList.add("text-[#6C757D]");
+    div.classList.remove("text-black");
+    btn.classList.add("bg-[#868d93]");
+    btn.classList.remove("bg-black");
+  }
+};
+
+window.email = () => {
+  let input = document.querySelector("#email");
+  let div = document.querySelector("#email-div");
+  if (input.value) {
+    div.classList.remove("text-[#6C757D]");
+    div.classList.add("text-black");
+  } else {
+    div.classList.add("text-[#6C757D]");
+    div.classList.remove("text-black");
+  }
+};
