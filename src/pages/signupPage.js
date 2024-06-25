@@ -1,3 +1,5 @@
+import { router, routes } from "../../main";
+
 export function signupPage() {
   document.querySelector("#app").innerHTML = `
   <div class="h-screen">
@@ -133,7 +135,7 @@ window.btn = async () => {
           "Content-type": "application/json",
         },
       });
-      console.log(response);
+      router.navigate(routes.login);
     } catch (e) {
       console.log(e);
     }
