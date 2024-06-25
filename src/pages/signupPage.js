@@ -77,7 +77,7 @@ export function signupPage() {
     </div>
   </div>
   <div class="flex justify-center mt-[185px]">
-    <button class="w-[380px] h-[47px] rounded-[30px] bg-[#868d93] text-white" id="btn">
+    <button class="w-[380px] h-[47px] rounded-[30px] bg-[#868d93] text-white" id="btn" onclick="btn()" disabled>
       Sign up
     </button>
   </div>
@@ -95,11 +95,13 @@ window.pass = () => {
     div.classList.add("text-black");
     btn.classList.remove("bg-[#868d93]");
     btn.classList.add("bg-black");
+    btn.removeAttribute("disabled");
   } else {
     div.classList.add("text-[#6C757D]");
     div.classList.remove("text-black");
     btn.classList.add("bg-[#868d93]");
     btn.classList.remove("bg-black");
+    btn.disabled = true;
   }
 };
 
@@ -112,5 +114,28 @@ window.email = () => {
   } else {
     div.classList.add("text-[#6C757D]");
     div.classList.remove("text-black");
+  }
+};
+
+window.btn = async () => {
+  let pass = document.querySelector("#pass");
+  let email = document.querySelector("#email");
+  if (email.value && pass.value) {
+    const user = {
+      email: email.value,
+      password: pass.value,
+    };
+    try {
+      let response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
   }
 };
