@@ -35,8 +35,7 @@ export function signupPage() {
           placeholder="Password"
           class="bg-gray-100/50 h-[37px] w-[380px] py-2 px-10 placeholder:text-[14px] rounded focus-visible:border-black"
         />
-        <!-- <i class="fa-solid fa-eye absolute"></i> -->
-        <i class="fa-solid fa-eye-slash absolute right-[14px]"></i>
+        <i class="fa-solid fa-eye-slash absolute right-[14px]" id="eye" onclick="eyeBtn()"></i>
       </div>
       <div class="items-center flex justify-center">
         <label
@@ -144,5 +143,20 @@ window.btn = async () => {
     } catch (e) {
       console.log(e);
     }
+  }
+};
+
+window.eyeBtn = () => {
+  const eye = document.querySelector("#eye");
+  const pass = document.querySelector("#pass");
+  const eyeClass = eye.classList;
+  if (eyeClass.value.includes("fa-eye-slash")) {
+    eye.classList.remove("fa-eye-slash");
+    eye.classList.add("fa-eye");
+    pass.type = "text";
+  } else {
+    eye.classList.add("fa-eye-slash");
+    eye.classList.remove("fa-eye");
+    pass.type = "password";
   }
 };
