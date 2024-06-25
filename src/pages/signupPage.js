@@ -1,7 +1,11 @@
 import { router, routes } from "../../main";
 
 export function signupPage() {
-  document.querySelector("#app").innerHTML = `
+  const token = localStorage.getItem("accessToken") ?? false;
+  if (token) {
+    router.navigate(routes.home);
+  } else {
+    document.querySelector("#app").innerHTML = `
   <div class="h-screen">
   <div class="h-[56px] flex items-center pl-7">
     <i class="fa-solid fa-arrow-left text-xl"></i>
@@ -86,6 +90,7 @@ export function signupPage() {
 </div>
 
   `;
+  }
 }
 
 window.pass = () => {
