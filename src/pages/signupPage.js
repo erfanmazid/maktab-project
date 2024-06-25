@@ -68,9 +68,15 @@ export function signupPage() {
           Remember Me
         </label>
       </div>
+      <div class="flex justify-center items-center -mt-5">
+        <a href="/login" data-navigo>
+          <p class="text-blue-500">login to your own acount</p>
+        </a>
+      </div>
+
     </div>
   </div>
-  <div class="flex justify-center mt-52">
+  <div class="flex justify-center mt-[185px]">
     <button class="w-[380px] h-[47px] rounded-[30px] bg-[#868d93] text-white" id="btn">
       Sign up
     </button>
