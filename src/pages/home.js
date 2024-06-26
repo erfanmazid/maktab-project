@@ -4,6 +4,7 @@ export default function homePage() {
   const token = localStorage.getItem("accessToken") ?? false;
   if (token) {
     renderHTML();
+    nav();
   } else {
     router.navigate(routes.login);
   }
@@ -167,7 +168,8 @@ function renderHTML() {
       <ul class="flex gap-x-[44px]">
         <li>
           <a
-            href=""
+            href="/home"
+            data-navigo
             class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar active"
           >
             <i class="fa-solid fa-house text-[24px]"></i>
@@ -176,7 +178,8 @@ function renderHTML() {
         </li>
         <li>
           <a
-            href=""
+            href="/home"
+            data-navigo
             class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
           >
             <i class="fa-solid fa-bag-shopping text-[24px]"></i>
@@ -185,7 +188,8 @@ function renderHTML() {
         </li>
         <li>
           <a
-            href=""
+            href="/home"
+            data-navigo
             class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
           >
             <i class="fa-solid fa-cart-shopping text-[24px]"></i>
@@ -194,7 +198,8 @@ function renderHTML() {
         </li>
         <li>
           <a
-            href=""
+            href="/home"
+            data-navigo
             class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
           >
             <i class="fa-solid fa-wallet text-[24px]"></i>
@@ -203,7 +208,9 @@ function renderHTML() {
         </li>
         <li>
           <a
-            href=""
+            onclick="nav()"
+            href="/home"
+            data-navigo
             class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
           >
             <i class="fa-solid fa-user text-[24px]"></i>
@@ -217,3 +224,13 @@ function renderHTML() {
 
   `;
 }
+
+window.nav = () => {
+  const bars = document.querySelectorAll(".bar");
+  bars.forEach((items) => {
+    items.addEventListener("click", () => {
+      document.querySelector(".active").classList.remove("active");
+      items.classList.add("active");
+    });
+  });
+};
