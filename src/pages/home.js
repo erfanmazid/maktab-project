@@ -1,9 +1,16 @@
+import { router, routes } from "../../main";
+
 export default function homePage() {
-  document.querySelector("#app").innerHTML = `hi`;
+  const token = localStorage.getItem("accessToken") ?? false;
+  if (token) {
+    renderHTML();
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 function renderHTML() {
-  return `
+  document.getElementById("app").innerHTML = `
 <div class="flex flex-col items-center h-screen relative">
   <div class="h-[80px] p-7 flex justify-between items-center w-full">
     <div class="flex gap-x-4">
