@@ -1,9 +1,11 @@
+import axios from "./api";
 import { router, routes } from "../../main";
 
-export default function homePage() {
+export default async function homePage() {
   const token = localStorage.getItem("accessToken") ?? false;
   if (token) {
-    renderHTML();
+    const data = await productData();
+    renderHTML(data);
     nav();
     opt();
   } else {
@@ -11,7 +13,7 @@ export default function homePage() {
   }
 }
 
-function renderHTML() {
+function renderHTML(products) {
   document.getElementById("app").innerHTML = `
 <div class="flex flex-col items-center h-screen relative">
   <div class="h-[80px] p-7 flex justify-between items-center w-full">
@@ -260,3 +262,8 @@ window.opt = () => {
     });
   });
 };
+
+async function productData() {
+  const respons = await axios.get("/products");
+  return respons.data;
+}
