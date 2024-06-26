@@ -8,12 +8,13 @@ export default async function homePage() {
     renderHTML(data);
     nav();
     opt();
+    icon();
   } else {
     router.navigate(routes.login);
   }
 }
 
-function renderHTML(products) {
+export function renderHTML(products) {
   document.getElementById("app").innerHTML = `
 <div class="flex flex-col items-center h-screen relative">
   <div class="h-[80px] p-7 flex justify-between items-center w-full">
@@ -43,7 +44,7 @@ function renderHTML(products) {
   </div>
   <div class="flex flex-wrap p-4 gap-x-[35px] gap-y-[28px] w-[380px] h-[234px]">
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/nike" data-navigo>
+      <a href="/products/Nike" data-navigo class="icons">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
@@ -53,7 +54,7 @@ function renderHTML(products) {
       </a>
     </div>
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/adidas" data-navigo>
+      <a href="/products/Adidas" data-navigo class="icons">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
@@ -63,7 +64,7 @@ function renderHTML(products) {
       </a>
     </div>
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/puma" data-navigo>
+      <a href="/products/Puma" data-navigo class="icons">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
@@ -73,7 +74,7 @@ function renderHTML(products) {
       </a>
     </div>
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/reebok" data-navigo>
+      <a href="/products/Reebok" data-navigo class="icons">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
@@ -83,7 +84,7 @@ function renderHTML(products) {
       </a>
     </div>
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/asics" data-navigo>
+      <a href="/products/Asics" data-navigo class="icons" onclick="icon()">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
@@ -108,35 +109,35 @@ function renderHTML(products) {
         <p>All</p>
       </div>
       </a>
-      <a href="/products/nike" data-navigo>
+      <a href="/products/Nike" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Nike</p>
       </div>
       </a>
-      <a href="/products/adidas" data-navigo>
+      <a href="/products/Adidas" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Adidas</p>
       </div>
       </a>
-      <a href="/products/puma" data-navigo>
+      <a href="/products/Puma" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Puma</p>
       </div>
       </a>
-      <a href="/products/reebok" data-navigo>
+      <a href="/products/Reebok" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Reebok</p>
       </div>
       </a>
-      <a href="/products/asics" data-navigo>
+      <a href="/products/Asics" data-navigo>
       <div
         onclick="opt()"
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
@@ -257,3 +258,12 @@ async function productData() {
   const respons = await axios.get("/products?_limit=6");
   return respons.data;
 }
+
+window.icon = () => {
+  const icons = document.querySelectorAll(".icons");
+  icons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      localStorage.setItem("brand", icon.querySelector("p").innerHTML);
+    });
+  });
+};
