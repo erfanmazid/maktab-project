@@ -17,6 +17,11 @@ export const routes = {
   product: "/products/:id",
 };
 
+function render(children, click) {
+  document.getElementById("app").innerHTML = children;
+  click();
+}
+
 router
   .on(routes.loading, loadingPage)
   .on(routes.signup, signupPage)
