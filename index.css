@@ -15,6 +15,10 @@
   bottom: 80px !important;
 }
 
+.active {
+  color: black !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
