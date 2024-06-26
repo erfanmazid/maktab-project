@@ -1,48 +1,20 @@
-export default function productPage() {
-  document.querySelector("#app").innerHTML = `nike`;
+import { router, routes } from "../../main";
+import axios from "./api";
+
+let b = "";
+
+export default async function productPage(match) {
+  b = match.data.id;
+  const mmd = await productData(b);
+  renderHTML(mmd);
 }
 
-function renderHTML(products) {
+async function renderHTML(products) {
   document.getElementById("app").innerHTML = `
     <div class="flex flex-col gap-y-3 w-full">
     <div class="flex justify-start items-center font-semibold w-full p-5 gap-x-5">
     <i class="fa-solid fa-arrow-left" onclick="back()"></i>
-      <p class="text-[20px]">Most Popular</p>
-    </div>
-    <div
-      class="flex gap-x-3 pl-5 overflow-x-scroll h-[39px] w-full items-center no-scrollbar"
-    >
-      <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt active-option"
-      >
-        <p>All</p>
-      </div>
-      <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
-      >
-         <p>Nike</p>
-      </div>
-      <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
-      >
-         <p>Adidas</p>
-      </div>
-      <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
-      >
-         <p>Puma</p>
-      </div>
-      <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
-      >
-         <p>Reebok</p>
-      </div>
-      <div
-        onclick="opt()"
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
-      >
-         <p>Asics</p>
-      </div>
+      <p class="text-[20px]">${b}</p>
     </div>
     <div
       class="flex flex-wrap gap-5 p-5 overflow-y-auto items-center no-scrollbar"
@@ -69,3 +41,13 @@ function renderHTML(products) {
 
 `;
 }
+
+async function productData(b) {
+  const brands = `brand=${b}`;
+  const data = await axios.get(`/products?${brands}`);
+  return data.data;
+}
+
+window.back = () => {
+  router.navigate(routes.home);
+};
