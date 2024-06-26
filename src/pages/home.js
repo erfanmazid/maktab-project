@@ -158,7 +158,7 @@ function renderHTML(products) {
           class="w-[182px] h-[182px] rounded-[24px]"
           alt=""
         />
-        <p class="text-[20px] font-bold w-[150px] overflow-hidden text-ellipsis text-nowrap">${product.title}</p>
+        <p class="text-[20px] font-bold w-[180px] overflow-hidden text-ellipsis text-nowrap">${product.title}</p>
         <p class="text-[16px] font-semibold">$ ${product.price}</p>
       </div>
     </a>
