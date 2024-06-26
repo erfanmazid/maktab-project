@@ -1,10 +1,19 @@
 import axios from "./api";
+import { router, routes } from "../../main";
 
-export default async function productsPage() {
+export default async function productsPage(dataBrand) {
   const token = localStorage.getItem("accessToken") ?? false;
   if (token) {
     const data = await productData();
-    renderHTML(data);
+    try {
+      renderHTML(dataBrand);
+      opt();
+    } catch (e) {
+      renderHTML(data);
+      opt();
+    }
+    renderHTML(dataBrand);
+    opt();
   } else {
     router.navigate(routes.login);
   }
@@ -19,49 +28,37 @@ function renderHTML(products) {
     <div
       class="flex gap-x-3 pl-5 overflow-x-scroll h-[39px] w-full items-center no-scrollbar"
     >
-      <a href="/products" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt active-option"
       >
         <p>All</p>
       </div>
-      </a>
-      <a href="/products/nike" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Nike</p>
       </div>
-      </a>
-      <a href="/products/adidas" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Adidas</p>
       </div>
-      </a>
-      <a href="/products/puma" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Puma</p>
       </div>
-      </a>
-      <a href="/products/reebok" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Reebok</p>
       </div>
-      </a>
-      <a href="/products/asics" data-navigo>
       <div
         onclick="opt()"
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Asics</p>
       </div>
-      </a>
     </div>
     <div
       class="flex flex-wrap gap-5 p-5 overflow-y-auto items-center no-scrollbar"
@@ -93,3 +90,28 @@ async function productData() {
   const respons = await axios.get("/products");
   return respons.data;
 }
+
+async function productDataBrand(brand = "") {
+  const brands = `brand=${brand}`;
+  const respons = await axios.get(`/products?${brands}`);
+  productsPage(respons.data);
+  return respons.data;
+}
+
+window.opt = () => {
+  const items = document.querySelectorAll(".opt");
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      document
+        .querySelector(".active-option")
+        .classList.remove("active-option");
+      item.classList.add("active-option");
+      const brand = item.querySelector("p").innerHTML;
+      if (brand == "All") {
+        productsPage(productData());
+      } else {
+        productDataBrand(brand);
+      }
+    });
+  });
+};
