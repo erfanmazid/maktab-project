@@ -32,6 +32,6 @@ router
   .on(routes.login, loginPage)
   .on(routes.home, homePage)
   .on(routes.products, productsPage)
-  .on(routes.product, productPage)
+  .on(routes.product, (match) => productPage(match))
   .on(routes.productInfo, (match) => productInfoPage(match))
   .resolve();
