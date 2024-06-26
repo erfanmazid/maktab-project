@@ -22,7 +22,8 @@ export default async function productsPage(dataBrand) {
 function renderHTML(products) {
   document.getElementById("app").innerHTML = `
     <div class="flex flex-col gap-y-3 w-full">
-    <div class="flex justify-between items-center font-semibold w-full p-5">
+    <div class="flex justify-start items-center font-semibold w-full p-5 gap-x-5">
+    <i class="fa-solid fa-arrow-left" onclick="back()"></i>
       <p class="text-[20px]">Most Popular</p>
     </div>
     <div
@@ -114,4 +115,8 @@ window.opt = () => {
       }
     });
   });
+};
+
+window.back = () => {
+  router.navigate(routes.home);
 };
