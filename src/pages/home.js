@@ -5,6 +5,7 @@ export default function homePage() {
   if (token) {
     renderHTML();
     nav();
+    opt();
   } else {
     router.navigate(routes.login);
   }
@@ -98,36 +99,49 @@ function renderHTML() {
     <div
       class="flex gap-x-3 pl-5 overflow-x-scroll h-[39px] w-full items-center no-scrollbar"
     >
+      <a href="/products" data-navigo>
       <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] active-option"
+        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt active-option"
       >
-        <a href="/products" data-navigo>all</a>
+        <p>all</p>
       </div>
+      </a>
+      <a href="/products/nike" data-navigo>
       <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40]"
+        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
-        <a href="/products/nike" data-navigo> Nike</a>
+         <p>Nike</p>
       </div>
+      </a>
+      <a href="/products/adidas" data-navigo>
       <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40]"
+        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
-        <a href="/products/adidas" data-navigo> Adidas</a>
+         <p>Adidas</p>
       </div>
+      </a>
+      <a href="/products/puma" data-navigo>
       <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40]"
+        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
-        <a href="/products/puma" data-navigo> Puma</a>
+         <p>Puma</p>
       </div>
+      </a>
+      <a href="/products/reebok" data-navigo>
       <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40]"
+        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
-        <a href="/products/reebok" data-navigo> Reebok</a>
+         <p>Reebok</p>
       </div>
+      </a>
+      <a href="/products/asics" data-navigo>
       <div
-        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40]"
+        onclick="opt()"
+        class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
-        <a href="/products/asics" data-navigo> Asics</a>
+         <p>Asics</p>
       </div>
+      </a>
     </div>
     <div
       class="flex flex-wrap gap-5 p-5 h-[290px] overflow-y-scroll items-center no-scrollbar"
@@ -231,6 +245,18 @@ window.nav = () => {
     items.addEventListener("click", () => {
       document.querySelector(".active").classList.remove("active");
       items.classList.add("active");
+    });
+  });
+};
+
+window.opt = () => {
+  const items = document.querySelectorAll(".opt");
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      document
+        .querySelector(".active-option")
+        .classList.remove("active-option");
+      item.classList.add("active-option");
     });
   });
 };
