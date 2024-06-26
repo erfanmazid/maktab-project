@@ -13,6 +13,8 @@ export const routes = {
   signup: "/signup",
   login: "/login",
   home: "/home",
+  products: "/products",
+  product: "/products/:id",
 };
 
 router
