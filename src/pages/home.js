@@ -105,7 +105,7 @@ function renderHTML(products) {
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt active-option"
       >
-        <p>all</p>
+        <p>All</p>
       </div>
       </a>
       <a href="/products/nike" data-navigo>
@@ -148,33 +148,23 @@ function renderHTML(products) {
     <div
       class="flex flex-wrap gap-5 p-5 h-[290px] overflow-y-scroll items-center no-scrollbar"
     >
+    ${products
+      .map((product) => {
+        return `
+    <a href="/product/${product.id}" data-navigo>
       <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]">
         <img
-          src="src/img/nike/21-1.jpg"
+          src="${product.images[0]}"
           class="w-[182px] h-[182px] rounded-[24px]"
           alt=""
         />
-        <p class="text-[20px] font-bold">Title</p>
-        <p class="text-[16px] font-semibold">$ 85.00</p>
+        <p class="text-[20px] font-bold w-[150px] overflow-hidden text-ellipsis text-nowrap">${product.title}</p>
+        <p class="text-[16px] font-semibold">$ ${product.price}</p>
       </div>
-      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]">
-        <img
-          src="src/img/nike/21-1.jpg"
-          class="w-[182px] h-[182px] rounded-[24px]"
-          alt=""
-        />
-        <p class="text-[20px] font-bold">Title</p>
-        <p class="text-[16px] font-semibold">$ 85.00</p>
-      </div>
-      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]">
-        <img
-          src="src/img/nike/21-1.jpg"
-          class="w-[182px] h-[182px] rounded-[24px]"
-          alt=""
-        />
-        <p class="text-[20px] font-bold">Title</p>
-        <p class="text-[16px] font-semibold">$ 85.00</p>
-      </div>
+    </a>
+        `;
+      })
+      .join("")}
     </div>
   </div>
   <div
@@ -264,6 +254,6 @@ window.opt = () => {
 };
 
 async function productData() {
-  const respons = await axios.get("/products");
+  const respons = await axios.get("/products?_limit=6");
   return respons.data;
 }
