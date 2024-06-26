@@ -143,6 +143,7 @@ window.btn = async () => {
         .then((x) => x.json())
         .then((data) => (userdata = data));
       localStorage.setItem("accessToken", userdata.accessToken);
+      localStorage.setItem("email", userdata.user.email);
       router.navigate(routes.home);
     } catch (e) {
       console.log(e);
