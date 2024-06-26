@@ -18,6 +18,17 @@
 .active {
   color: black !important;
 }
+.active-option {
+  background-color: #343a40 !important;
+  color: white !important;
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 @tailwind base;
 @tailwind components;
