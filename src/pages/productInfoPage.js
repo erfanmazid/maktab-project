@@ -1,5 +1,22 @@
-export default function productInfoPage(match) {
+import axios from "./api";
+import Splide from "@splidejs/splide";
+import { productSlider } from "./productSlider";
+
+export default async function productInfoPage(match) {
   const id = match.data.id;
-  console.log(id);
-  document.querySelector("#app").innerHTML = `info`;
+  const data = await productData(id);
+  productSlider(data[0].images);
+  const splide = new Splide(".splide", {
+    classes: {
+      arrows: "splide__arrows hidden",
+    },
+  }).mount();
+
+  // document.querySelector("#app").innerHTML = `info`;
+}
+
+async function productData(id) {
+  const serch = `id=${id}`;
+  const data = await axios.get(`/products?${serch}`);
+  return data.data;
 }
