@@ -35,12 +35,14 @@ export function renderHTML(products) {
   <div class="w-[380px] h-[37px] mt-2 relative flex items-center">
     <input
       type="text"
+      id="searchInp"
       class="bg-gray-100/85 w-full h-full rounded py-2 px-10 placeholder:text-[14px] placeholder:text-[#BAB8BC]"
       placeholder="Search"
     />
     <i
       class="fa-solid fa-magnifying-glass absolute left-[14px] text-[#6C757D] text-[18px]"
     ></i>
+    <i class="fa-solid fa-bars-progress absolute right-[14px]" onclick="search()"></i>
   </div>
   <div class="flex flex-wrap p-4 gap-x-[35px] gap-y-[28px] w-[380px] h-[234px]">
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
@@ -266,4 +268,9 @@ window.icon = () => {
       localStorage.setItem("brand", icon.querySelector("p").innerHTML);
     });
   });
+};
+
+window.search = () => {
+  const inp = document.querySelector("#searchInp").value;
+  router.navigate(routes.search + `?q=${inp}`);
 };
