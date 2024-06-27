@@ -8,6 +8,7 @@ import homePage from "./src/pages/home";
 import productInfoPage from "./src/pages/productInfoPage";
 import productsPage from "./src/pages/products";
 import productPage from "./src/pages/product";
+import searchPage from "./src/pages/search";
 export const root = document.querySelector("#app");
 
 export const router = new Navigo("/");
@@ -19,6 +20,7 @@ export const routes = {
   products: "/products",
   product: "/products/:id",
   productInfo: "/product/:id",
+  search: "/search",
 };
 
 function render(children, click) {
@@ -34,4 +36,5 @@ router
   .on(routes.products, productsPage)
   .on(routes.product, (match) => productPage(match))
   .on(routes.productInfo, (match) => productInfoPage(match))
+  .on(routes.search, (match) => searchPage(match))
   .resolve();
