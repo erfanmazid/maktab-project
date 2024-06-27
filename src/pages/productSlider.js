@@ -1,5 +1,5 @@
 export function productSlider(info) {
-  document.querySelector("#app").innerHTML = `
+  return `
   <section class="splide -mt-8" aria-label="Splide Basic HTML Example">
     <div class="splide__track ">
           <ul class="splide__list h-full">
