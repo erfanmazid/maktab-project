@@ -1,8 +1,11 @@
 import axios from "./api";
 import { router, routes } from "../../main";
+import debounce from "lodash.debounce";
 
 export default async function searchPage(e) {
-  localStorage.getItem("searchHistory");
+  const searchs = JSON.parse(localStorage.searchHistory);
+  searchs.push(e.params.q);
+  localStorage.searchHistory = JSON.stringify(searchs);
   const prod = await productData(e.params.q);
   if (prod.length == 0) {
     renderHTML(e, prod);
@@ -20,11 +23,11 @@ function renderHTML(e, prod) {
   <div class="flex flex-col justify-start items-center h-screen pt-4">
   <div class="w-[380px] mt-2 relative flex items-center">
     <input
+    oninput="inpType()"
       type="text"
       id="searchInp"
       class="bg-gray-100/85 w-full rounded-xl border border-black py-4 px-10 placeholder:text-[14px] placeholder:text-[#BAB8BC]"
       placeholder="Search"
-      oninput="type()"
     />
     <i
       class="fa-solid fa-magnifying-glass absolute left-[14px] text-[#6C757D] text-[18px]"
@@ -66,7 +69,7 @@ function renderHTMLFound(e, prod) {
         id="searchInp"
         class="bg-gray-100/85 w-full rounded-xl border border-black py-4 px-10 placeholder:text-[14px] placeholder:text-[#BAB8BC]"
         placeholder="Search"
-        oninput="type()"
+        oninput="inpType()"
       />
       <i
         class="fa-solid fa-magnifying-glass absolute left-[14px] text-[#6C757D] text-[18px]"
@@ -113,12 +116,11 @@ function renderHTMLFound(e, prod) {
 window.search = () => {
   const inp = document.querySelector("#searchInp").value;
   router.navigate(routes.search + `?q=${inp}`);
+  //   localStorage.serchHistory= JSON.
 };
 
-window.type = () => {
-  //   let nmd = document.querySelector("#searchInp").value;
-  //   console.log(nmd);
-  console.log("hi");
+window.inpType = () => {
+  let nmd = document.querySelector("#searchInp").value;
 };
 
 async function productData(b) {
