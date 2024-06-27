@@ -15,6 +15,8 @@ export default async function homePage() {
 }
 
 export function renderHTML(products) {
+  const email = localStorage.getItem("email");
+  console.log(email);
   document.getElementById("app").innerHTML = `
 <div class="flex flex-col items-center h-screen relative">
   <div class="h-[80px] p-7 flex justify-between items-center w-full">
@@ -24,7 +26,7 @@ export function renderHTML(products) {
       </div>
       <div class="flex flex-col justify-between">
         <p class="text-[#757475]">Good Morning 👋</p>
-        <p class="pt-1">Saeed Abdilar</p>
+        <p class="pt-1 w-[130px] overflow-hidden text-ellipsis text-nowrap">${email}</p>
       </div>
     </div>
     <div class="w-16 h-6 flex justify-between">
