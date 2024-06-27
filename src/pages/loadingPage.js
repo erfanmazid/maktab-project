@@ -8,6 +8,7 @@ export default function loadingPage() {
     router.navigate(routes.login);
   } else {
     localStorage.searchHistory = JSON.stringify([]);
+    localStorage.cartList = JSON.stringify([]);
     document.querySelector("#app").innerHTML = `
         <div class="flex flex-col items-center h-screen">
         <div class="flex items-center gap-x-2 mt-[360px] mb-[250px]">
