@@ -20,6 +20,7 @@
     "@splidejs/splide": "^4.1.4",
     "axios": "^1.7.2",
     "express": "^4.19.2",
+    "lodash.debounce": "^4.0.8",
     "navigo": "^8.11.1",
     "swiper": "^11.1.4"
   }
