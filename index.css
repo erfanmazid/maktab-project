@@ -23,6 +23,16 @@
   color: white !important;
 }
 
+.size-active {
+  background-color: black !important;
+  color: white !important;
+  border-color: black !important;
+}
+
+.tick-active {
+  display: block !important;
+}
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
