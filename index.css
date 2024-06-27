@@ -6,12 +6,12 @@
   border-radius: 0% !important;
 }
 
-.splide__pagination__page.is-active {
+.splide__pagination__page.is-active:first-child {
   background-color: black !important;
   transform: none !important;
 }
 
-.splide__pagination {
+.splide__pagination:first-child {
   bottom: 80px !important;
 }
 
