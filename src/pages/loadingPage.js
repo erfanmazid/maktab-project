@@ -7,6 +7,7 @@ export default function loadingPage() {
   if (welcome) {
     router.navigate(routes.login);
   } else {
+    localStorage.setItem("searchHistory");
     document.querySelector("#app").innerHTML = `
         <div class="flex flex-col items-center h-screen">
         <div class="flex items-center gap-x-2 mt-[360px] mb-[250px]">
