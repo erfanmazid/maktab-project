@@ -26,7 +26,6 @@ function renderHtml(product) {
     .map((item) => {
       const data = product.find((x) => x.id == item.id);
       const colorNeed = data.colors.find((x) => x.color_code == item.color);
-      console.log(colorNeed);
       let sum = item.number * item.price;
       total += sum;
 
@@ -61,9 +60,9 @@ function renderHtml(product) {
           <div
             class="w-[100px] bg-gray-100 rounded-full h-[35px] flex justify-between items-center px-4 py-2 text-[14px]"
           >
-            <i class="fa-solid fa-minus"></i>
+            <i class="fa-solid fa-minus" onclick="numMines(${item.id})"></i>
             <p class="font-bold text-[16px]" id="num">${item.number}</p>
-            <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-plus" onclick="numPlus(${item.id})"></i>
           </div>
         </div>
       </div>
@@ -267,4 +266,23 @@ window.remove = async (id) => {
   const newCart = cartList.filter((x) => x.id != id);
   localStorage.cartList = JSON.stringify(newCart);
   renderHtml(allProduct);
+};
+
+window.numPlus = async (id) => {
+  const info = await productData();
+  const cartList = JSON.parse(localStorage.cartList);
+  const index = cartList.findIndex((item) => item.id == id);
+  cartList[index].number++;
+  localStorage.cartList = JSON.stringify(cartList);
+  renderHtml(info);
+};
+
+window.numMines = async (id) => {
+  const info = await productData();
+  const cartList = JSON.parse(localStorage.cartList);
+  const index = cartList.findIndex((item) => item.id == id);
+  cartList[index].number--;
+  if (cartList[index].number == 0) removeproduct(id);
+  localStorage.cartList = JSON.stringify(cartList);
+  renderHtml(info);
 };
