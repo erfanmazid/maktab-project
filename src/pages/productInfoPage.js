@@ -12,7 +12,7 @@ export default async function productInfoPage(match) {
   renderHTML(slid, data[0], id);
   stylecolor();
   styleSize();
-  addToCart(id);
+  addToCart(id, data[0]);
 }
 
 function renderHTML(slider, info, id) {
@@ -154,7 +154,7 @@ function styleSize() {
   });
 }
 
-function addToCart(id) {
+function addToCart(id, info) {
   const cartList = JSON.parse(localStorage.cartList);
   const btn = document.querySelector("#cart-btn");
   btn.addEventListener("click", () => {
@@ -166,6 +166,7 @@ function addToCart(id) {
       color: color.getAttribute("color"),
       size: size.querySelector("p").innerHTML,
       number: count,
+      price: info.price,
     };
     cartList.push(order);
     localStorage.cartList = JSON.stringify(cartList);
