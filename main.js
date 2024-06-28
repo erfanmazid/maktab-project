@@ -10,6 +10,7 @@ import productsPage from "./src/pages/products";
 import productPage from "./src/pages/product";
 import searchPage from "./src/pages/search";
 import cartPage from "./src/pages/cart";
+import checkoutPage from "./src/pages/checkout";
 export const root = document.querySelector("#app");
 
 export const router = new Navigo("/");
@@ -23,6 +24,7 @@ export const routes = {
   productInfo: "/product/:id",
   search: "/search",
   cart: "/cart",
+  checkout: "/checkout",
 };
 
 function render(children, click) {
@@ -40,4 +42,5 @@ router
   .on(routes.productInfo, (match) => productInfoPage(match))
   .on(routes.search, (match) => searchPage(match))
   .on(routes.cart, cartPage)
+  .on(routes.checkout, checkoutPage)
   .resolve();
