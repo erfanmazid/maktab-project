@@ -26,12 +26,13 @@ function renderHtml(product) {
     .map((item) => {
       const data = product.find((x) => x.id == item.id);
       const colorNeed = data.colors.find((x) => x.color_code == item.color);
+      console.log(colorNeed);
       let sum = item.number * item.price;
       total += sum;
 
       return `
           <div
-      class="flex bg-white w-full h-[150px] rounded-[30px] gap-x-5 p-5 items-center"
+      class="flex bg-white w-full h-[150px] rounded-[30px] gap-x-5 p-5 items-center relative"
     >
       <div>
         <img
@@ -47,10 +48,10 @@ function renderHtml(product) {
           >
             ${data.title}
           </p>
-          <i class="fa-solid fa-trash text-[18px]" id="${item.id}"></i>
+          <i class="fa-solid fa-trash text-[18px]" onclick="removeproduct(${item.id})"></i>
         </div>
         <div class="flex gap-x-2 items-center text-[13px] text-gray-500">
-          <div class="w-4 h-4 rounded-full bg-[${item.color}] border border-gray-200"></div>
+          <div class="w-4 h-4 rounded-full ${colorNeed.colorCode} border border-gray-200"></div>
           <p>${colorNeed.color_name}</p>
           <p>|</p>
           <p>Size = ${item.size}</p>
@@ -145,6 +146,70 @@ function renderHtml(product) {
   </div>
 </div>
 
+<div
+  class=" items-center bg-black bg-opacity-50 h-screen absolute top-0 left-0 w-full hidden"
+  id="deleteModal"
+>
+  <div
+    class="absolute -bottom-full transition duration-500 flex flex-col items-center w-full bg-gray-50 rounded-t-[40px]"
+    id="modal"
+  >
+    <div class="w-10 mt-3 border-t-4"></div>
+    <div class="pt-6">
+      <p class="text-[25px] font-semibold">Remove from cart?</p>
+    </div>
+    <div
+      class="flex flex-col space-y-8 w-[380px] mt-5 overflow-y-scroll no-scrollbar py-7 border-y border-gray-200"
+    >
+      <div
+        class="flex bg-white w-full h-[150px] rounded-[30px] gap-x-5 p-5 items-center"
+      >
+        <div>
+          <img
+            src="/src/img/nike/21-1.jpg"
+            class="w-[120px] rounded-[30px]"
+            alt=""
+            id="modalImg"
+          />
+        </div>
+        <div class="w-[200px] flex flex-col justify-between gap-y-3">
+          <div class="flex justify-between items-center">
+            <p
+              class="font-semibold text-[20px] text-nowrap text-ellipsis overflow-hidden w-[160px]"
+              id="modalTitle"
+            >
+              Air Jordan 3 Retro
+            </p>
+          </div>
+          <div class="flex gap-x-2 items-center text-[13px] text-gray-500">
+            <div class="w-4 h-4 rounded-full bg-black"></div>
+            <p id="modalColor">Black</p>
+            <p>|</p>
+            <p>Size = <span id="modalSize"></span></p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="text-[20px] font-semibold w-[100px]">$<span id="modalPrice"></span></p>
+            <div
+              class="w-[100px] bg-gray-100 rounded-full h-[35px] flex justify-between items-center px-4 py-2 text-[14px]"
+            >
+              <i class="fa-solid fa-minus"></i>
+              <p class="font-bold text-[16px]" id="num"><span id="modalNum"></span></p>
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex w-[380px] gap-x-3 pt-5 pb-10">
+      <button class="w-[49%] bg-gray-200 rounded-full" onclick="cancle()">Cancel</button>
+      <button class="w-[49%] bg-black text-white py-4 rounded-full" id="removeConfirm">
+        Yes, Remove
+      </button>
+    </div>
+  </div>
+</div>
+
+
     `;
 }
 
@@ -152,3 +217,54 @@ async function productData() {
   const data = await axios.get(`/products`);
   return data.data;
 }
+
+window.removeproduct = async (id) => {
+  const info = await productData();
+  const modal = document.querySelector("#deleteModal");
+  const modalDown = document.querySelector("#modal");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  modalDown.classList.remove("-bottom-full");
+  modalDown.classList.add("bottom-0");
+  const cartList = JSON.parse(localStorage.cartList);
+  const product1 = cartList.filter((item) => item.id == id);
+  const product2 = info.filter((item) => item.id == id);
+
+  const img = document.querySelector("#modalImg");
+  img.src = product2[0].images[0];
+
+  const title = document.querySelector("#modalTitle");
+  title.innerHTML = product2[0].title;
+
+  const size = document.querySelector("#modalSize");
+  size.innerHTML = product1[0].size;
+
+  const price = document.querySelector("#modalPrice");
+  price.innerHTML = product1[0].price * product1[0].number + ".00";
+
+  const num = document.querySelector("#modalNum");
+  num.innerHTML = product1[0].number;
+
+  const color = document.querySelector("#modalColor");
+  color.innerHTML = product1[0].color;
+
+  const removeYes = document.querySelector("#removeConfirm");
+  removeYes.setAttribute("onclick", `remove(${id})`);
+};
+
+window.cancle = () => {
+  const modal = document.querySelector("#deleteModal");
+  const modalDown = document.querySelector("#modal");
+  modal.classList.remove("flex");
+  modal.classList.add("hidden");
+  modalDown.classList.remove("bottom-0");
+  modalDown.classList.add("-bottom-full");
+};
+
+window.remove = async (id) => {
+  const allProduct = await productData();
+  const cartList = JSON.parse(localStorage.cartList);
+  const newCart = cartList.filter((x) => x.id != id);
+  localStorage.cartList = JSON.stringify(newCart);
+  renderHtml(allProduct);
+};
