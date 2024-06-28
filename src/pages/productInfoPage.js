@@ -19,6 +19,9 @@ function renderHTML(slider, info, id) {
   document.querySelector("#app").innerHTML += `
   <div class="flex flex-col items-center gap-y-4 relative h-screen">
   ${slider}
+  <div class=" absolute left-6 top-8 text-xl">
+      <i class="fa-solid fa-arrow-left" onclick="back()"></i>
+  </div>
   <div class="flex w-[380px] justify-between items-center">
     <p class="text-[20px] font-bold">${info.title}</p>
     <i class="fa-regular fa-heart text-[30px]"></i>
@@ -168,3 +171,7 @@ function addToCart(id) {
     localStorage.cartList = JSON.stringify(cartList);
   });
 }
+
+window.back = () => {
+  router.navigate(routes.home);
+};
