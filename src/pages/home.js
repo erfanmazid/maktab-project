@@ -188,7 +188,7 @@ export function renderHTML(products) {
         </li>
         <li>
           <a
-            href="/home"
+            href="/cart"
             data-navigo
             class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
           >
