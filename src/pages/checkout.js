@@ -1,3 +1,4 @@
+import { router, routes } from "../../main";
 import axios from "./api";
 
 export default async function checkoutPage() {
@@ -5,13 +6,15 @@ export default async function checkoutPage() {
   renderHtml(allProduct);
 }
 
-function renderHtml(allProduct) {
+function renderHtml(product) {
+  const cartList = JSON.parse(localStorage.cartList);
+  let total = 0;
   document.querySelector("#app").innerHTML = `
     <div
   class="flex flex-col items-center gap-y-3 w-full h-screen bg-gray-50 relative"
 >
   <div class="flex justify-start items-center font-semibold w-full p-5 gap-x-5">
-    <i class="fa-solid fa-arrow-left text-[20px]"></i>
+    <i class="fa-solid fa-arrow-left text-[20px]" onclick="backCart()"></i>
     <p class="text-[25px] font-semibold">Checkout</p>
   </div>
   <div
@@ -41,8 +44,59 @@ function renderHtml(allProduct) {
       </div>
     </div>
     <div class="border-t border-gray-200 pt-7">
-      <div class="mt-2 w-[380px] flex pb-7">
+      <div class="mt-2 w-[380px] flex flex-col pb-7">
         <h1 class="text-[20px] font-semibold">Order List</h1>
+  <div
+    class="flex-grow flex-col space-y-8 w-[380px] mt-5 pb-2"
+  >
+  ${cartList
+    .map((item) => {
+      const data = product.find((x) => x.id == item.id);
+      const colorNeed = data.colors.find((x) => x.color_code == item.color);
+      let sum = item.number * item.price;
+      total += sum;
+
+      return `
+          <div
+      class="flex bg-white w-full h-[150px] rounded-[30px] gap-x-5 p-5 items-center relative"
+    >
+      <div>
+        <img
+          src="${data.images[0]}"
+          class="w-[120px] rounded-[30px]"
+          alt=""
+        />
+      </div>
+      <div class="w-[200px] flex flex-col justify-between gap-y-3">
+        <div class="flex justify-between items-center">
+          <p
+            class="font-semibold text-[20px] text-nowrap text-ellipsis overflow-hidden w-[160px]"
+          >
+            ${data.title}
+          </p>
+        </div>
+        <div class="flex gap-x-2 items-center text-[13px] text-gray-500">
+          <div class="w-4 h-4 rounded-full ${colorNeed.colorCode} border border-gray-200"></div>
+          <p>${colorNeed.color_name}</p>
+          <p>|</p>
+          <p>Size = ${item.size}</p>
+        </div>
+        <div class="flex justify-between items-center">
+          <p class="text-[20px] font-semibold w-[100px]">$${sum}.00</p>
+          <div
+            class="w-[35px] bg-gray-100 rounded-full h-[35px] flex justify-center items-center p-4"
+          >
+            <p class="font-semibold text-[14px] text-center" id="num">${item.number}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      `;
+    })
+    .join("")}
+  </div>
+
       </div>
       <div
         class="mt-2 w-[380px] flex flex-col border-y pt-7 pb-3 border-gray-200"
@@ -84,7 +138,7 @@ function renderHtml(allProduct) {
       <div class="bg-white p-6 flex flex-col gap-y-7 rounded-[20px]">
         <div class="flex justify-between items-center">
           <p class="text-gray-400">Amount</p>
-          <p class="font-semibold">$585.00</p>
+          <p class="font-semibold">$${total}.00</p>
         </div>
         <div
           class="flex justify-between items-center pb-5 border-b border-gray-200"
@@ -121,3 +175,7 @@ async function productData() {
   const data = await axios.get(`/products`);
   return data.data;
 }
+
+window.backCart = () => {
+  router.navigate(routes.cart);
+};
