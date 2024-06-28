@@ -1,6 +1,7 @@
 export function slider() {
   document.querySelector("#app").innerHTML = `
-<section class="splide h-screen -mt-8" aria-label="Splide Basic HTML Example">
+  <div class="welcom-slider">
+  <section class="splide h-screen -mt-8" aria-label="Splide Basic HTML Example">
   <div class="splide__track ">
 		<ul class="splide__list h-full">
 			<li class="splide__slide">
@@ -27,5 +28,7 @@ export function slider() {
   <button id="next-btn" class="text-[14px] w-full bg-[#212529] rounded-full h-[50px] flex justify-center items-center text-white">Next</button>
   </div>
 </section>
+
+  </div>
     `;
 }
