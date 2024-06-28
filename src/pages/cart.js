@@ -1,4 +1,5 @@
 import axios from "./api";
+import { router, routes } from "../../main";
 
 export default async function cartPage() {
   const allProduct = await productData();
@@ -83,6 +84,7 @@ function renderHtml(product) {
       <div
         class="py-5 px-14 w-[65%] flex gap-x-4 items-center justify-center bg-black rounded-[34px] text-white text-[18px]"
         id="cart-btn"
+        onclick="checkbtn()"
       >
       <p>Check out</p>
       <i class="fa-solid fa-arrow-right"></i>
@@ -285,4 +287,8 @@ window.numMines = async (id) => {
   if (cartList[index].number == 0) removeproduct(id);
   localStorage.cartList = JSON.stringify(cartList);
   renderHtml(info);
+};
+
+window.checkbtn = () => {
+  router.navigate(routes.checkout);
 };
