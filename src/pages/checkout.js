@@ -40,7 +40,7 @@ function renderHtml(product) {
         </div>
       </div>
       <div>
-        <i class="fa-solid fa-pen-to-square text-[20px]"></i>
+        <i class="fa-solid fa-pen-to-square text-[20px]" onclick="shippingRout()"></i>
       </div>
     </div>
     <div class="border-t border-gray-200 pt-7">
@@ -178,4 +178,8 @@ async function productData() {
 
 window.backCart = () => {
   router.navigate(routes.cart);
+};
+
+window.shippingRout = () => {
+  router.navigate(routes.shipping);
 };
