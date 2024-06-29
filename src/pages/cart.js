@@ -3,6 +3,7 @@ import { router, routes } from "../../main";
 
 export default async function cartPage() {
   const allProduct = await productData();
+  localStorage.shippingType = JSON.stringify([]);
   renderHtml(allProduct);
 }
 
