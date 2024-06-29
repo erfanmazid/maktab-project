@@ -114,7 +114,7 @@ function renderHtml(product) {
             </div>
           </div>
           <div>
-            <i class="fa-solid fa-chevron-right text-[20px]"></i>
+            <i class="fa-solid fa-chevron-right text-[20px]" onclick="shippingType()"></i>
           </div>
         </div>
       </div>
@@ -182,4 +182,8 @@ window.backCart = () => {
 
 window.shippingRout = () => {
   router.navigate(routes.shipping);
+};
+
+window.shippingType = () => {
+  router.navigate(routes.shippingType);
 };
