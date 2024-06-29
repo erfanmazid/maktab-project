@@ -3,7 +3,9 @@ import { router, routes } from "../../main";
 
 export default async function cartPage() {
   const allProduct = await productData();
+  const address = await addressData();
   localStorage.shippingType = JSON.stringify([]);
+  localStorage.address = JSON.stringify(address[0]);
   renderHtml(allProduct);
 }
 
@@ -217,6 +219,11 @@ function renderHtml(product) {
 
 async function productData() {
   const data = await axios.get(`/products`);
+  return data.data;
+}
+
+async function addressData() {
+  const data = await axios.get(`/address`);
   return data.data;
 }
 
