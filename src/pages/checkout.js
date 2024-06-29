@@ -4,14 +4,15 @@ import axios from "./api";
 export default async function checkoutPage() {
   const allProduct = await productData();
   const shippingType = JSON.parse(localStorage.shippingType);
+  const adres = JSON.parse(localStorage.address);
   if (shippingType.length == 0) {
-    renderHtml(allProduct);
+    renderHtml(allProduct, adres);
   } else {
-    renderHtmlType(allProduct, shippingType);
+    renderHtmlType(allProduct, shippingType, adres);
   }
 }
 
-function renderHtml(product) {
+function renderHtml(product, location) {
   const cartList = JSON.parse(localStorage.cartList);
   let total = 0;
   document.querySelector("#app").innerHTML = `
@@ -36,11 +37,11 @@ function renderHtml(product) {
           <i class="fa-solid fa-location-dot text-[20px] text-white"></i>
         </div>
         <div class="flex flex-col justify-between w-[220px]">
-          <p class="text-[20px] font-semibold">Home</p>
+          <p class="text-[20px] font-semibold">${location.title}</p>
           <p
             class="text-[14px] text-gray-400 mt-1 text-nowrap overflow-hidden text-ellipsis"
           >
-            61480 Sunbrook Park, PC 5679
+            ${location.address}
           </p>
         </div>
       </div>
@@ -176,7 +177,7 @@ function renderHtml(product) {
   `;
 }
 
-function renderHtmlType(product, data) {
+function renderHtmlType(product, data, location) {
   const cartList = JSON.parse(localStorage.cartList);
   let total = 0;
   document.querySelector("#app").innerHTML = `
@@ -201,11 +202,11 @@ function renderHtmlType(product, data) {
           <i class="fa-solid fa-location-dot text-[20px] text-white"></i>
         </div>
         <div class="flex flex-col justify-between w-[220px]">
-          <p class="text-[20px] font-semibold">Home</p>
+          <p class="text-[20px] font-semibold">${location.title}</p>
           <p
             class="text-[14px] text-gray-400 mt-1 text-nowrap overflow-hidden text-ellipsis"
           >
-            61480 Sunbrook Park, PC 5679
+            ${location.address}
           </p>
         </div>
       </div>
