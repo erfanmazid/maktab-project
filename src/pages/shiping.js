@@ -40,8 +40,9 @@ function renderHTML(address) {
         <input
           type="radio"
           name="shipping"
-          id=""
+          id="shipping"
           ${item.default}
+          value="${item.title}"
           class="border-black border-2 bg-black focus:border-black"
         />
       </div>
@@ -66,6 +67,7 @@ function renderHTML(address) {
       <div
         class="py-5 px-14 w-full flex gap-x-4 items-center justify-center bg-black rounded-[34px] text-white text-[18px]"
         id="cart-btn"
+        onclick="backCheckOut()"
       >
         <p>Apply</p>
       </div>
@@ -82,5 +84,14 @@ async function addressData() {
 }
 
 window.backCheck = () => {
+  router.navigate(routes.checkout);
+};
+
+window.backCheckOut = async () => {
+  const val = document.querySelector("#shipping:checked").value;
+  const data = await addressData();
+  const type = data.find((item) => item.title == val);
+  localStorage.removeItem("address");
+  localStorage.address = JSON.stringify(type);
   router.navigate(routes.checkout);
 };
