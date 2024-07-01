@@ -13,6 +13,7 @@ import cartPage from "./src/pages/cart";
 import checkoutPage from "./src/pages/checkout";
 import shippingPage from "./src/pages/shiping";
 import shippingTypePage from "./src/pages/shippingType";
+import paymentPage from "./src/pages/paymentPage";
 export const root = document.querySelector("#app");
 
 export const router = new Navigo("/");
@@ -29,6 +30,7 @@ export const routes = {
   checkout: "/checkout",
   shipping: "/shipping",
   shippingType: "/shippingType",
+  payment: "/payment",
 };
 
 function render(children, click) {
@@ -49,4 +51,5 @@ router
   .on(routes.checkout, checkoutPage)
   .on(routes.shipping, shippingPage)
   .on(routes.shippingType, shippingTypePage)
+  .on(routes.payment, paymentPage)
   .resolve();
