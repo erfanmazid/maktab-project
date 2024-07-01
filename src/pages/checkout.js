@@ -177,6 +177,8 @@ function renderHtml(product, location) {
   `;
 }
 
+let allCash = 0;
+
 function renderHtmlType(product, data, location) {
   const cartList = JSON.parse(localStorage.cartList);
   let total = 0;
@@ -328,9 +330,9 @@ function renderHtmlType(product, data, location) {
         </div>
         <div class="flex justify-between items-center">
           <p class="text-gray-400">Total</p>
-          <p class="font-semibold">$<span id="allCash">${
-            +total + +data.cash
-          }</span>.00</p>
+          <p class="font-semibold">$<span id="allCash">${(allCash =
+            +total + +data.cash)}
+</span>.00</p>
         </div>
       </div>
     </div>
@@ -342,6 +344,7 @@ function renderHtmlType(product, data, location) {
       <div
         class="py-5 px-14 w-full flex gap-x-4 items-center justify-center bg-black rounded-[34px] text-white text-[18px]"
         id="cart-btn"
+        onclick="paymentPage()"
       >
         <p>Continue To Payment</p>
         <i class="fa-solid fa-arrow-right"></i>
@@ -349,7 +352,6 @@ function renderHtmlType(product, data, location) {
     </div>
   </div>
 </div>
-
   `;
 }
 
@@ -368,4 +370,9 @@ window.shippingRout = () => {
 
 window.shippingType = () => {
   router.navigate(routes.shippingType);
+};
+
+window.paymentPage = () => {
+  router.navigate(routes.payment);
+  localStorage.allcost = JSON.stringify([allCash]);
 };
