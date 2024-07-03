@@ -1,6 +1,7 @@
 import axios from "./api";
 import Splide from "@splidejs/splide";
 import { productSlider } from "./productSlider";
+import { router, routes } from "../../main";
 
 let count = 0;
 let allCash = 0;
@@ -20,7 +21,7 @@ function renderHTML(slider, info, id) {
   <div class="flex flex-col items-center gap-y-4 relative h-screen">
   ${slider}
   <div class=" absolute left-6 top-8 text-xl">
-      <i class="fa-solid fa-arrow-left" onclick="back()"></i>
+      <i class="fa-solid fa-arrow-left" onclick="backTo()"></i>
   </div>
   <div class="flex w-[380px] justify-between items-center">
     <p class="text-[20px] font-bold">${info.title}</p>
@@ -173,6 +174,11 @@ function addToCart(id, info) {
   });
 }
 
-window.back = () => {
-  router.navigate(routes.home);
+window.backTo = () => {
+  const brand = localStorage.getItem("brand");
+  if (brand == "home") {
+    router.navigate(routes.home);
+  } else {
+    router.navigate(`/products/${brand}`);
+  }
 };
