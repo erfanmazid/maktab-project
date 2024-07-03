@@ -78,5 +78,77 @@ window.backCheck = () => {
 };
 
 window.confirm = async () => {
+  const data = await axios.get("/cart");
+  const dataNeed = data.data;
+
+  const cartList = JSON.parse(localStorage.cartList);
+  const shippingType = JSON.parse(localStorage.shippingType);
+  const address = JSON.parse(localStorage.address);
+  const allcost = JSON.parse(localStorage.allcost);
+  const email = localStorage.getItem("email");
+
+  const showTime = time();
+  const showDate = date();
+
+  const cart = {
+    id: dataNeed.length + 1,
+    date: showDate,
+    time: showTime,
+    isdone: false,
+    cartList: cartList,
+    shippingType: shippingType,
+    address: address,
+    allcost: allcost,
+    email: email,
+  };
+  try {
+    const cartPush = await axios.post("/cart", cart);
+    console.log(cartPush);
+    localStorage.removeItem("cartList");
+    localStorage.removeItem("address");
+    localStorage.removeItem("shippingType");
+    localStorage.removeItem("allcost");
+    localStorage.cartList = JSON.stringify([]);
+  } catch (e) {
+    console.log(e);
+  }
   router.navigate(routes.home);
 };
+
+function time() {
+  let date = new Date();
+  let hour = date.getHours();
+  if (hour < 10) {
+    hour = "0" + hour;
+  }
+  let minute = date.getMinutes();
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+  let second = date.getSeconds();
+  if (second < 10) {
+    second = "0" + second;
+  }
+
+  const time = hour + ":" + minute + ":" + second;
+  return time;
+}
+
+function date() {
+  let date = new Date();
+
+  let year = date.getFullYear();
+
+  let month = date.getMonth();
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  let day = date.getDay();
+  if (day < 10) {
+    day = "0" + day;
+  }
+
+  const time = day + "/" + month + "/" + year;
+  return time;
+}
