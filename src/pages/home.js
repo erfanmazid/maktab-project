@@ -5,6 +5,7 @@ export default async function homePage() {
   const token = localStorage.getItem("accessToken") ?? false;
   if (token) {
     const data = await productData();
+    localStorage.setItem("brand", ["home"]);
     renderHTML(data);
     nav();
     opt();
