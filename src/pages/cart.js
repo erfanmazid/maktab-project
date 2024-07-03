@@ -7,6 +7,7 @@ export default async function cartPage() {
   localStorage.shippingType = JSON.stringify([]);
   localStorage.address = JSON.stringify(address[0]);
   renderHtml(allProduct);
+  nav();
 }
 
 function renderHtml(product) {
@@ -95,55 +96,25 @@ function renderHtml(product) {
     </div>
     <nav>
       <ul class="flex gap-x-[44px]">
-        <li>
-          <a
-            href="/home"
-            data-navigo
-            class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
-          >
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
             <i class="fa-solid fa-house text-[24px]"></i>
             <p class="text-[10px] font-semibold">Home</p>
-          </a>
         </li>
-        <li>
-          <a
-            href="/cart"
-            data-navigo
-            class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar active"
-          >
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar active">
             <i class="fa-solid fa-bag-shopping text-[24px]"></i>
             <p class="text-[10px] font-semibold">cart</p>
-          </a>
         </li>
-        <li>
-          <a
-            href="/home"
-            data-navigo
-            class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
-          >
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
             <i class="fa-solid fa-cart-shopping text-[24px]"></i>
             <p class="text-[10px] font-semibold">Orders</p>
-          </a>
         </li>
-        <li>
-          <a
-            href="/home"
-            data-navigo
-            class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
-          >
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
             <i class="fa-solid fa-wallet text-[24px]"></i>
             <p class="text-[10px] font-semibold">Wallet</p>
-          </a>
         </li>
-        <li>
-          <a
-            href="/home"
-            data-navigo
-            class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar"
-          >
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
             <i class="fa-solid fa-user text-[24px]"></i>
             <p class="text-[10px] font-semibold">Profile</p>
-          </a>
         </li>
       </ul>
     </nav>
@@ -299,4 +270,17 @@ window.numMines = async (id) => {
 
 window.checkbtn = () => {
   router.navigate(routes.checkout);
+};
+
+window.nav = () => {
+  const bars = document.querySelectorAll(".bar");
+  bars.forEach((items) => {
+    items.addEventListener("click", () => {
+      document.querySelector(".active").classList.remove("active");
+      items.classList.add("active");
+      const pageName = items.querySelector("p").innerHTML;
+      const newPage = pageName.toLocaleLowerCase();
+      router.navigate(`/${newPage}`);
+    });
+  });
 };
