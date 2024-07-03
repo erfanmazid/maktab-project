@@ -40,6 +40,11 @@
   }
 }
 
+.order {
+  color: #d1d5db !important;
+  border-color: #d1d5db !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
