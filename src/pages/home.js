@@ -46,55 +46,45 @@ export function renderHTML(products) {
     <i class="fa-solid fa-bars-progress absolute right-[14px]" onclick="search()"></i>
   </div>
   <div class="flex flex-wrap p-4 gap-x-[35px] gap-y-[28px] w-[380px] h-[234px]">
-    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/Nike" data-navigo class="icons">
+    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
           <img src="src/img/home/brands/nike.png" class="w-[30px]" alt="" />
         </div>
         <p class="text-center text-[14px] font-semibold">Nike</p>
-      </a>
     </div>
-    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/Adidas" data-navigo class="icons">
+    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
           <img src="src/img/home/brands/adidas.png" class="w-[30px]" alt="" />
         </div>
         <p class="text-center text-[14px] font-semibold">Adidas</p>
-      </a>
     </div>
-    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/Puma" data-navigo class="icons">
+    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
           <img src="src/img/home/brands/puma.png" class="w-[30px]" alt="" />
         </div>
         <p class="text-center text-[14px] font-semibold">Puma</p>
-      </a>
     </div>
-    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/Reebok" data-navigo class="icons">
+    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
           <img src="src/img/home/brands/reebok.png" class="w-[30px]" alt="" />
         </div>
         <p class="text-center text-[14px] font-semibold">Reebok</p>
-      </a>
     </div>
-    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%]">
-      <a href="/products/Asics" data-navigo class="icons" onclick="icon()">
+    <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
         >
           <img src="src/img/home/brands/asics.png" class="w-[30px]" alt="" />
         </div>
         <p class="text-center text-[14px] font-semibold">Asics</p>
-      </a>
     </div>
   </div>
   <div class="flex flex-col gap-y-3 w-full">
@@ -155,8 +145,7 @@ export function renderHTML(products) {
     ${products
       .map((product) => {
         return `
-    <a href="/product/${product.id}" data-navigo>
-      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]">
+      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]" onclick="showItem(${product.id})">
         <img
           src="${product.images[0]}"
           class="w-[182px] h-[182px] rounded-[24px]"
@@ -165,7 +154,6 @@ export function renderHTML(products) {
         <p class="text-[20px] font-bold w-[180px] overflow-hidden text-ellipsis text-nowrap">${product.title}</p>
         <p class="text-[16px] font-semibold">$ ${product.price}</p>
       </div>
-    </a>
         `;
       })
       .join("")}
@@ -235,10 +223,11 @@ async function productData() {
 }
 
 window.icon = () => {
-  const icons = document.querySelectorAll(".icons");
+  const icons = document.querySelectorAll(".brandIcon");
   icons.forEach((icon) => {
     icon.addEventListener("click", () => {
       localStorage.setItem("brand", icon.querySelector("p").innerHTML);
+      router.navigate(`/products/${icon.querySelector("p").innerHTML}`);
     });
   });
 };
@@ -246,4 +235,9 @@ window.icon = () => {
 window.search = () => {
   const inp = document.querySelector("#searchInp").value;
   router.navigate(routes.search + `?q=${inp}`);
+};
+
+window.showItem = (id) => {
+  document.querySelector("#app").innerHTML = "";
+  router.navigate(`/product/${id}`);
 };
