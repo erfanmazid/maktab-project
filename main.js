@@ -57,5 +57,5 @@ router
   .on(routes.shippingType, shippingTypePage)
   .on(routes.payment, paymentPage)
   .on(routes.order, orders)
-  .on(routes.orderShow, orderShow)
+  .on(routes.orderShow, (match) => orderShow(match))
   .resolve();
