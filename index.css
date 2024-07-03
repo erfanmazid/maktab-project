@@ -40,9 +40,14 @@
   }
 }
 
-.order {
+.orderDisable {
   color: #d1d5db !important;
   border-color: #d1d5db !important;
+}
+
+.order {
+  color: black !important;
+  border-color: black !important;
 }
 
 @tailwind base;
