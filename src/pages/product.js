@@ -22,8 +22,7 @@ async function renderHTML(products) {
     ${products
       .map((product) => {
         return `
-    <a href="/product/${product.id}" data-navigo>
-      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]">
+      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]" onclick="showItem(${product.id})">
         <img
           src="${product.images[0]}"
           class="w-[182px] h-[182px] rounded-[24px]"
@@ -32,7 +31,6 @@ async function renderHTML(products) {
         <p class="text-[20px] font-bold w-[180px] overflow-hidden text-ellipsis text-nowrap">${product.title}</p>
         <p class="text-[16px] font-semibold">$ ${product.price}</p>
       </div>
-    </a>
         `;
       })
       .join("")}
@@ -50,4 +48,9 @@ async function productData(b) {
 
 window.back = () => {
   router.navigate(routes.home);
+};
+
+window.showItem = (id) => {
+  document.querySelector("#app").innerHTML = "";
+  router.navigate(`/product/${id}`);
 };
