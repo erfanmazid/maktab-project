@@ -15,6 +15,7 @@ import shippingPage from "./src/pages/shiping";
 import shippingTypePage from "./src/pages/shippingType";
 import paymentPage from "./src/pages/paymentPage";
 import orders from "./src/pages/orders";
+import orderShow from "./src/pages/orderShow";
 export const root = document.querySelector("#app");
 
 export const router = new Navigo("/");
@@ -33,6 +34,7 @@ export const routes = {
   shippingType: "/shippingType",
   payment: "/payment",
   order: "/orders",
+  orderShow: "/orders/:id",
 };
 
 function render(children, click) {
@@ -55,4 +57,5 @@ router
   .on(routes.shippingType, shippingTypePage)
   .on(routes.payment, paymentPage)
   .on(routes.order, orders)
+  .on(routes.orderShow, orderShow)
   .resolve();
