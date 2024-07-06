@@ -6,6 +6,7 @@ export default async function cartPage() {
   const address = await addressData();
   localStorage.shippingType = JSON.stringify([]);
   localStorage.address = JSON.stringify(address[0]);
+  localStorage.setItem("brand", ["cart"]);
   renderHtml(allProduct);
   nav();
 }
@@ -14,8 +15,8 @@ function renderHtml(product) {
   const cartList = JSON.parse(localStorage.cartList);
   let total = 0;
   document.querySelector("#app").innerHTML = `
-        <div class="flex flex-col items-center h-screen bg-gray-50">
-  <div class="flex justify-between items-center w-[380px] py-4">
+        <div class="flex flex-col items-center h-screen bg-gray-50 px-[6%]">
+  <div class="flex justify-between items-center w-full py-4">
     <div class="flex gap-x-5 items-center">
       <img src="/src/img/logo/logoBlack.png" class="w-5" alt="" />
       <p class="text-[24px] font-semibold">My Cart</p>
@@ -25,7 +26,7 @@ function renderHtml(product) {
     </div>
   </div>
   <div
-    class="flex-grow flex-col space-y-8 w-[380px] mt-5 overflow-y-scroll no-scrollbar mb-[178px] pb-2"
+    class="flex-grow flex-col space-y-8 w-full mt-5 overflow-y-scroll no-scrollbar mb-[178px] pb-2"
   >
   ${cartList
     .map((item) => {
@@ -36,7 +37,7 @@ function renderHtml(product) {
 
       return `
           <div
-      class="flex bg-white w-full h-[150px] rounded-[30px] gap-x-5 p-5 items-center relative"
+      class="flex bg-white w-full h-[150px] rounded-[30px] gap-x-5 p-5 items-center relative" onclick="gotoProduct(${item.id})"
     >
       <div>
         <img
@@ -55,7 +56,7 @@ function renderHtml(product) {
           <i class="fa-solid fa-trash text-[18px]" onclick="removeproduct(${item.id})"></i>
         </div>
         <div class="flex gap-x-2 items-center text-[13px] text-gray-500">
-          <div class="w-4 h-4 rounded-full ${colorNeed.colorCode} border border-gray-200"></div>
+          <div class="w-4 h-4 rounded-full border border-gray-200" style="background-color: ${item.color}"></div>
           <p>${colorNeed.color_name}</p>
           <p>|</p>
           <p>Size = ${item.size}</p>
@@ -283,4 +284,9 @@ window.nav = () => {
       router.navigate(`/${newPage}`);
     });
   });
+};
+
+window.gotoProduct = (id) => {
+  document.querySelector("#app").innerHTML = "";
+  router.navigate(`/product/${id}`);
 };
