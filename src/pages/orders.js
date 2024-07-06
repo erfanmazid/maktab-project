@@ -1,5 +1,5 @@
 import axios from "axios";
-import { router } from "../../main";
+import { router, routes } from "../../main";
 
 export default async function orders() {
   const carts = await cartData();
@@ -33,7 +33,6 @@ function renderHtml(carts) {
   >
   ${carts
     .map((cart) => {
-      console.log(cart);
       if (!cart.isdone)
         return `
           <div
@@ -47,7 +46,7 @@ function renderHtml(carts) {
       <div class="flex flex-col gap-y-1">
         <p>Number of Shoes: ${cart.cartList.length}</p>
         <p>Shiping Type: ${cart.shippingType.type}</p>
-        <button class="border-2 border-black px-4 py-1 rounded-xl">Viwe all result</button>
+        <button class="border-2 border-black px-4 py-1 rounded-xl" onclick="orderShow(${cart.id})">Viwe all result</button>
       </div>
     </div>
 
@@ -115,6 +114,9 @@ function click() {
 
 async function cartData() {
   const data = await axios.get(`/cart`);
-  console.log(data.data);
   return data.data;
 }
+
+window.orderShow = (id) => {
+  router.navigate(`/orders/${id}`);
+};
