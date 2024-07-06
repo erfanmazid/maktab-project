@@ -10,8 +10,8 @@ export default async function orders() {
 
 function renderHtml(carts) {
   document.querySelector("#app").innerHTML = `
-          <div class="flex flex-col items-center h-screen bg-gray-50">
-    <div class="flex justify-between items-center w-[380px] py-4">
+          <div class="flex flex-col items-center h-screen bg-gray-50 px-[6%]">
+    <div class="flex justify-between items-center w-full py-4">
       <div class="flex gap-x-5 items-center">
         <img src="/src/img/logo/logoBlack.png" class="w-5" alt="" />
         <p class="text-[24px] font-semibold">My Order</p>
@@ -20,7 +20,7 @@ function renderHtml(carts) {
         <i class="fa-solid fa-magnifying-glass text-[26px]"></i>
       </div>
     </div>
-    <div class="flex justify-between items-center w-[380px] py-4">
+    <div class="flex justify-between items-center w-full py-4">
         <div class="w-[50%] text-center border-b pb-2 border-black  order click" style="border-width:0px 0px 3px 0px">
             <p>Active</p>
         </div>
@@ -29,7 +29,7 @@ function renderHtml(carts) {
         </div>
     </div>
       <div
-    class="flex-grow flex-col space-y-8 w-[380px] mt-5 overflow-y-scroll no-scrollbar mb-[79px] pb-2"
+    class="flex-grow flex-col space-y-8 w-full mt-5 overflow-y-scroll no-scrollbar mb-[79px] pb-2"
   >
   ${carts
     .map((cart) => {
