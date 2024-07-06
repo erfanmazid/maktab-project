@@ -222,7 +222,7 @@ function renderHtmlEmty(product) {
       class="w-[50%]"
       alt=""
     />
-    <p class="mt-7 font-bold text-[20px]">Cart Emty!</p>
+    <p class="mt-7 font-bold text-[20px]">Cart Empty!</p>
     <p class="text-center w-[345px] mt-3">
       You Shoud add some shoes to tour cart!
     </p>
@@ -398,7 +398,7 @@ window.remove = async (id) => {
   const cartList = JSON.parse(localStorage.cartList);
   const newCart = cartList.filter((x) => x.id != id);
   localStorage.cartList = JSON.stringify(newCart);
-  renderHtml(allProduct);
+  cartPage();
 };
 
 window.numPlus = async (id) => {
