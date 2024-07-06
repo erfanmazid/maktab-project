@@ -18,8 +18,8 @@ export default async function homePage() {
 export function renderHTML(products) {
   const email = localStorage.getItem("email");
   document.getElementById("app").innerHTML = `
-<div class="flex flex-col items-center h-screen relative">
-  <div class="h-[80px] p-7 flex justify-between items-center w-full">
+<div class="flex flex-col items-center h-screen relative px-[6%]">
+  <div class="h-[80px] py-7 flex justify-between items-center w-full">
     <div class="flex gap-x-4">
       <div>
         <img src="src/img/home/profile.png" alt="" class="w-12" />
@@ -34,7 +34,7 @@ export function renderHTML(products) {
       <img src="src/img/home/heartIcon.png" alt="" />
     </div>
   </div>
-  <div class="w-[380px] h-[37px] mt-2 relative flex items-center">
+  <div class="w-full h-[37px] mt-2 relative flex items-center">
     <input
       type="text"
       id="searchInp"
@@ -46,7 +46,7 @@ export function renderHTML(products) {
     ></i>
     <i class="fa-solid fa-bars-progress absolute right-[14px]" onclick="search()"></i>
   </div>
-  <div class="flex flex-wrap p-4 gap-x-[35px] gap-y-[28px] w-[380px] h-[234px]">
+  <div class="flex flex-wrap py-4 px-2 gap-x-[35px] gap-y-[28px] w-full h-[234px] justify-between">
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
         <div
           class="w-[60px] h-[60px] bg-gray-200 rounded-full flex justify-center items-center"
@@ -89,12 +89,12 @@ export function renderHTML(products) {
     </div>
   </div>
   <div class="flex flex-col gap-y-3 w-full">
-    <div class="flex justify-between items-center font-semibold w-full p-5">
+    <div class="flex justify-between items-center font-semibold w-full py-5">
       <p class="text-[20px]">Most Popular</p>
       <a href="/products" class="text-[16px]" data-navigo>See All</a>
     </div>
     <div
-      class="flex gap-x-3 pl-5 overflow-x-scroll h-[39px] w-full items-center no-scrollbar"
+      class="flex gap-x-3 overflow-x-scroll h-[39px] w-full items-center no-scrollbar"
     >
       <a href="/products" data-navigo>
       <div
@@ -141,12 +141,12 @@ export function renderHTML(products) {
       </a>
     </div>
     <div
-      class="flex flex-wrap gap-5 p-5 h-[290px] overflow-y-scroll items-center no-scrollbar"
+      class="flex flex-wrap gap-3 py-5 h-[290px] overflow-y-scroll items-center justify-center no-scrollbar"
     >
     ${products
       .map((product) => {
         return `
-      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]" onclick="showItem(${product.id})">
+      <div class="h-[244px] flex flex-col gap-y-1 basis-[47%]" onclick="showItem(${product.id})">
         <img
           src="${product.images[0]}"
           class="w-[182px] h-[182px] rounded-[24px]"
