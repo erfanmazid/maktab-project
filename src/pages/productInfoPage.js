@@ -180,6 +180,8 @@ window.backTo = () => {
   const brand = localStorage.getItem("brand");
   if (brand == "home") {
     router.navigate(routes.home);
+  } else if (brand == "cart") {
+    router.navigate(routes.cart);
   } else {
     router.navigate(`/products/${brand}`);
   }
