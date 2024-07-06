@@ -70,9 +70,10 @@ function renderHTML(slider, info, id) {
           .map((item) => {
             return `
           <div
-            class="w-10 h-10 rounded-full bg-[${item["color_code"]}] text-black flex justify-center items-center coll border co"
+            class="w-10 h-10 rounded-full text-black flex justify-center items-center coll border co"
+            style="background-color: ${item["color_code"]}"
           >
-            <p class="text-xl font-bold hidden" color="${item["color_code"]}" id="tik">✓</p>
+            <p class="text-xl font-bold hidden"color="${item["color_code"]}" id="tik">✓</p>
           </div>
             
           `;
