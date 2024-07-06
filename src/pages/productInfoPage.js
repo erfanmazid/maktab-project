@@ -17,6 +17,7 @@ export default async function productInfoPage(match) {
 }
 
 function renderHTML(slider, info, id) {
+  count = 0;
   document.querySelector("#app").innerHTML += `
   <div class="flex flex-col items-center gap-y-4 relative h-screen">
   ${slider}
