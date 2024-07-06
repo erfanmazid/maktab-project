@@ -202,9 +202,11 @@ window.orderShow = (id) => {
 window.activeClick = async () => {
   const carts = await cartData();
   renderHtmlActive(carts);
+  nav();
 };
 
 window.compliteClick = async () => {
   const carts = await cartData();
   renderHtmlDone(carts);
+  nav();
 };
