@@ -1,14 +1,14 @@
 import axios from "./api";
 import { router, routes } from "../../main";
 
-export default async function homePage() {
+export default async function homePage(match, brand) {
   const token = localStorage.getItem("accessToken") ?? false;
   if (token) {
-    const data = await productData();
+    const data = await productData(brand);
     localStorage.setItem("brand", ["home"]);
     renderHTML(data);
     nav();
-    opt();
+    optHome();
     icon();
   } else {
     router.navigate(routes.login);
@@ -96,44 +96,32 @@ export function renderHTML(products) {
     <div
       class="flex gap-x-3 overflow-x-scroll h-[39px] w-full items-center no-scrollbar"
     >
-      <a href="/products" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt active-option"
       >
         <p>All</p>
       </div>
-      </a>
-      <a href="/products/Nike" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Nike</p>
       </div>
-      </a>
-      <a href="/products/Adidas" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Adidas</p>
       </div>
-      </a>
-      <a href="/products/Puma" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Puma</p>
       </div>
-      </a>
-      <a href="/products/Reebok" data-navigo>
       <div
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Reebok</p>
       </div>
-      </a>
-      <a href="/products/Asics" data-navigo>
       <div
-        onclick="opt()"
         class="border-2 py-1 px-4 rounded-[25px] border-[#343A40] text-[#343A40] opt"
       >
          <p>Asics</p>
@@ -206,7 +194,7 @@ window.nav = () => {
   });
 };
 
-window.opt = () => {
+window.optHome = () => {
   const items = document.querySelectorAll(".opt");
   items.forEach((item) => {
     item.addEventListener("click", () => {
@@ -214,13 +202,21 @@ window.opt = () => {
         .querySelector(".active-option")
         .classList.remove("active-option");
       item.classList.add("active-option");
+      let x = 0;
+      homePage(x, item.querySelector("p").innerHTML);
     });
   });
 };
 
-async function productData() {
-  const respons = await axios.get("/products?_limit=6");
-  return respons.data;
+async function productData(brand) {
+  if (brand == undefined) brand = "All";
+  if (brand == "All") {
+    const respons = await axios.get(`/products?_limit=6`);
+    return respons.data;
+  } else {
+    const respons = await axios.get(`/products?_limit=6&brand=${brand}`);
+    return respons.data;
+  }
 }
 
 window.icon = () => {
