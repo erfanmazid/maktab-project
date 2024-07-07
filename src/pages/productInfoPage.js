@@ -21,6 +21,7 @@ export default async function productInfoPage(match) {
     stylecolor();
     styleSize();
     addToCart(id, data[0]);
+    checkWish(id);
   } else if (welcome == false) {
     router.navigate(routes.loading);
   } else {
@@ -34,11 +35,11 @@ function renderHTML(slider, info, id) {
   <div class="flex flex-col items-center gap-y-4 relative h-screen">
   ${slider}
   <div class=" absolute left-6 top-8 text-xl">
-      <i class="fa-solid fa-arrow-left" onclick="backTo()"></i>
+  <i class="fa-solid fa-arrow-left" onclick="backTo()"></i>
   </div>
   <div class="flex w-[380px] justify-between items-center">
     <p class="text-[20px] font-bold">${info.title}</p>
-    <i class="fa-regular fa-heart text-[30px]"></i>
+    <i class="fa-regular fa-heart text-[30px] bg-black bg-clip-text text-transparent" id="heartIcon" onclick="wishlist(${id})"></i>
   </div>
   <div class="w-[380px] flex items-center justify-start gap-x-3 border-b pb-4">
     <div class="rounded-lg px-3 py-1 bg-gray-100">
@@ -213,3 +214,35 @@ window.backTo = () => {
     router.navigate(`/products/${brand}`);
   }
 };
+
+window.wishlist = (id) => {
+  const heartIcon = document.querySelector("#heartIcon");
+  heartIcon.classList.toggle("fa-regular");
+  heartIcon.classList.toggle("bg-black");
+  heartIcon.classList.toggle("fa-solid");
+  heartIcon.classList.toggle("bg-red-500");
+  const classes = heartIcon.classList.value;
+
+  if (classes.includes("bg-red-500")) {
+    let wishList = JSON.parse(localStorage.wishList);
+    wishList.push(id);
+    localStorage.wishList = JSON.stringify(wishList);
+  } else {
+    let wishListremove = JSON.parse(localStorage.wishList);
+    const newWish = wishListremove.filter((x) => x != id);
+    localStorage.wishList = JSON.stringify(newWish);
+  }
+};
+
+function checkWish(id) {
+  const newId = +id;
+  let wishList = JSON.parse(localStorage.wishList);
+  let checking = wishList.includes(newId);
+  if (checking) {
+    const heartIcon = document.querySelector("#heartIcon");
+    heartIcon.classList.remove("fa-regular");
+    heartIcon.classList.remove("bg-black");
+    heartIcon.classList.add("fa-solid");
+    heartIcon.classList.add("bg-red-500");
+  }
+}
