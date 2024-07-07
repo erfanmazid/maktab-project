@@ -137,8 +137,6 @@ function renderHtml(product) {
   <div
     class="absolute -bottom-full transition duration-500 flex flex-col items-center w-full bg-gray-50 rounded-t-[40px]"
     id="modal"
-      data-aos="fade-up"
-
   >
     <div class="w-10 mt-3 border-t-4"></div>
     <div class="pt-6">
