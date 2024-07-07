@@ -37,7 +37,7 @@ export function renderHTML(products) {
     </div>
     <div class="w-16 h-6 flex justify-between">
       <img src="src/img/home/alert.png" alt="" />
-      <img src="src/img/home/heartIcon.png" alt="" />
+      <img src="src/img/home/heartIcon.png" onclick="gotoWish()" alt="" />
     </div>
   </div>
   <div class="w-full h-[37px] mt-2 relative flex items-center" id="mmdf">
@@ -320,4 +320,7 @@ function searchHistory() {
 window.gotoSearch = (search) => {
   console.log(search);
 };
-// addEventListener("");
+
+window.gotoWish = () => {
+  router.navigate(routes.wishList);
+};
