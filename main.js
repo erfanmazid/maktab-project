@@ -16,6 +16,7 @@ import shippingTypePage from "./src/pages/shippingType";
 import paymentPage from "./src/pages/paymentPage";
 import orders from "./src/pages/orders";
 import orderShow from "./src/pages/orderShow";
+import addAdressPage from "./src/pages/addAddress";
 export const root = document.querySelector("#app");
 
 export const router = new Navigo("/");
@@ -35,6 +36,7 @@ export const routes = {
   payment: "/payment",
   order: "/orders",
   orderShow: "/orders/:id",
+  addAdress: "/shipping/add",
 };
 
 function render(children, click) {
@@ -58,4 +60,5 @@ router
   .on(routes.payment, paymentPage)
   .on(routes.order, orders)
   .on(routes.orderShow, (match) => orderShow(match))
+  .on(routes.addAdress, addAdressPage)
   .resolve();
