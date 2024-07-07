@@ -108,8 +108,8 @@ function option() {
 
   root.querySelector("#next-btn").addEventListener("click", () => {
     if (splide.index + 1 == 3) {
-      router.navigate(routes.signup);
       localStorage.setItem("welcome", true);
+      router.navigate(routes.signup);
     } else {
       splide.go(splide.index + 1);
     }
