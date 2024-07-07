@@ -2,6 +2,10 @@ import axios from "./api";
 import Splide from "@splidejs/splide";
 import { productSlider } from "./productSlider";
 import { router, routes } from "../../main";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
+
+window.Toastify = Toastify;
 
 let count = 0;
 let allCash = 0;
@@ -173,6 +177,21 @@ function addToCart(id, info) {
     };
     cartList.push(order);
     localStorage.cartList = JSON.stringify(cartList);
+
+    Toastify({
+      text: "Your Shoa add to cart successfuly",
+      duration: 3000,
+      destination: "",
+      newWindow: true,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#6b7280",
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast();
   });
 }
 
