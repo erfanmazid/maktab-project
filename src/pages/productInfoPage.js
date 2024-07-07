@@ -210,6 +210,8 @@ window.backTo = () => {
     router.navigate(routes.home);
   } else if (brand == "cart") {
     router.navigate(routes.cart);
+  } else if (brand == "wishList") {
+    router.navigate(routes.wishList);
   } else {
     router.navigate(`/products/${brand}`);
   }
