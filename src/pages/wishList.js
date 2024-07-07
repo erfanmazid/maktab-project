@@ -30,12 +30,13 @@ function renderHtml(products) {
       .map((item) => {
         const data = products.find((x) => x.id == item);
         return `
-      <div class="w-[182px] h-[244px] flex flex-col gap-y-1 basis-[47%]" onclick="showItemWish(${data.id})">
+      <div class="w-[182px] relative h-[244px] flex flex-col gap-y-1 basis-[47%]" onclick="showItemWish(${data.id})">
         <img
           src="${data.images[0]}"
           class="w-[182px] h-[182px] rounded-[24px]"
           alt=""
         />
+        <i class="fa-solid fa-heart absolute text-2xl top-4 right-4 text-red-500"></i>
         <p class="text-[20px] font-bold w-[180px] overflow-hidden text-ellipsis text-nowrap">${data.title}</p>
         <p class="text-[16px] font-semibold">$ ${data.price}</p>
       </div>
