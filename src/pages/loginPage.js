@@ -1,9 +1,12 @@
 import { router, routes } from "../../main";
 
 export default function loginPage() {
+  const welcome = localStorage.getItem("welcome") ?? false;
   const token = localStorage.getItem("accessToken") ?? false;
-  if (token) {
+  if (token && welcome) {
     router.navigate(routes.home);
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
   } else {
     document.querySelector("#app").innerHTML = `
   <div class="h-screen">

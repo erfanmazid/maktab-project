@@ -2,8 +2,16 @@ import axios from "axios";
 import { router, routes } from "../../main";
 
 export default async function shippingPage() {
-  const address = await addressData();
-  renderHTML(address);
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const address = await addressData();
+    renderHTML(address);
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 function renderHTML(address) {

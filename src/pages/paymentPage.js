@@ -2,8 +2,16 @@ import axios from "./api";
 import { router, routes } from "../../main";
 
 export default async function paymentPage() {
-  const shipping = await shippingData();
-  renderHTML(shipping);
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const shipping = await shippingData();
+    renderHTML(shipping);
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 function renderHTML(data) {

@@ -2,19 +2,27 @@ import axios from "./api";
 import { router, routes } from "../../main";
 
 export default async function cartPage() {
-  const allProduct = await productData();
-  const address = await addressData();
-  localStorage.shippingType = JSON.stringify([]);
-  localStorage.address = JSON.stringify(address[0]);
-  localStorage.setItem("brand", ["cart"]);
-  const cartList = JSON.parse(localStorage.cartList);
-  if (cartList.length == 0) {
-    // document.querySelector("#app").innerHTML = `hi`;
-    renderHtmlEmty();
-    nav();
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const allProduct = await productData();
+    const address = await addressData();
+    localStorage.shippingType = JSON.stringify([]);
+    localStorage.address = JSON.stringify(address[0]);
+    localStorage.setItem("brand", ["cart"]);
+    const cartList = JSON.parse(localStorage.cartList);
+    if (cartList.length == 0) {
+      // document.querySelector("#app").innerHTML = `hi`;
+      renderHtmlEmty();
+      nav();
+    } else {
+      renderHtml(allProduct);
+      nav();
+    }
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
   } else {
-    renderHtml(allProduct);
-    nav();
+    router.navigate(routes.login);
   }
 }
 

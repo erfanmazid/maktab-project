@@ -3,18 +3,26 @@ import { router, routes } from "../../main";
 import debounce from "lodash.debounce";
 
 export default async function searchPage(e) {
-  const searchs = JSON.parse(localStorage.searchHistory);
-  searchs.push(e.params.q);
-  localStorage.searchHistory = JSON.stringify(searchs);
-  const prod = await productData(e.params.q);
-  if (prod.length == 0) {
-    renderHTML(e, prod);
-    let inp = document.querySelector("#searchInp");
-    inp.value = e.params.q;
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const searchs = JSON.parse(localStorage.searchHistory);
+    searchs.push(e.params.q);
+    localStorage.searchHistory = JSON.stringify(searchs);
+    const prod = await productData(e.params.q);
+    if (prod.length == 0) {
+      renderHTML(e, prod);
+      let inp = document.querySelector("#searchInp");
+      inp.value = e.params.q;
+    } else {
+      renderHTMLFound(e, prod);
+      let inp = document.querySelector("#searchInp");
+      inp.value = e.params.q;
+    }
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
   } else {
-    renderHTMLFound(e, prod);
-    let inp = document.querySelector("#searchInp");
-    inp.value = e.params.q;
+    router.navigate(routes.login);
   }
 }
 

@@ -2,10 +2,18 @@ import axios from "axios";
 import { router, routes } from "../../main";
 
 export default async function orders() {
-  const carts = await cartData();
-  renderHtmlActive(carts);
-  nav();
-  click();
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const carts = await cartData();
+    renderHtmlActive(carts);
+    nav();
+    click();
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 function renderHtmlActive(carts) {

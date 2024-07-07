@@ -3,7 +3,8 @@ import { router, routes } from "../../main";
 
 export default async function productsPage(dataBrand) {
   const token = localStorage.getItem("accessToken") ?? false;
-  if (token) {
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
     const data = await productData();
     try {
       renderHTML(dataBrand);
@@ -17,6 +18,8 @@ export default async function productsPage(dataBrand) {
     renderHTML(dataBrand);
     opt();
     nav();
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
   } else {
     router.navigate(routes.login);
   }

@@ -2,10 +2,18 @@ import { router, routes } from "../../main";
 import axios from "./api";
 
 export default async function orderShow(match) {
-  const data = await productData(match.data.id);
-  const allData = await productAllData();
-  renderHtml(data, allData);
-  nav();
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const data = await productData(match.data.id);
+    const allData = await productAllData();
+    renderHtml(data, allData);
+    nav();
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 function renderHtml(nmd, product) {

@@ -4,10 +4,18 @@ import axios from "./api";
 let b = "";
 
 export default async function productPage(match) {
-  b = match.data.id;
-  const mmd = await productData(b);
-  renderHTML(mmd);
-  nav();
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    b = match.data.id;
+    const mmd = await productData(b);
+    renderHTML(mmd);
+    nav();
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 async function renderHTML(products) {

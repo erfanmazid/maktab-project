@@ -3,7 +3,8 @@ import { router, routes } from "../../main";
 
 export default async function homePage(match, brand) {
   const token = localStorage.getItem("accessToken") ?? false;
-  if (token) {
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
     const data = await productData(brand);
     localStorage.setItem("brand", ["home"]);
     renderHTML(data);
@@ -11,6 +12,9 @@ export default async function homePage(match, brand) {
     optHome();
     icon();
     orderShow();
+    searchHistory();
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
   } else {
     router.navigate(routes.login);
   }
@@ -18,6 +22,7 @@ export default async function homePage(match, brand) {
 
 export function renderHTML(products) {
   const email = localStorage.getItem("email");
+  const historySearch = JSON.parse(localStorage.searchHistory);
   document.getElementById("app").innerHTML = `
 <div class="flex flex-col items-center h-screen relative px-[6%]">
   <div class="h-[80px] py-7 flex justify-between items-center w-full">
@@ -35,7 +40,7 @@ export function renderHTML(products) {
       <img src="src/img/home/heartIcon.png" alt="" />
     </div>
   </div>
-  <div class="w-full h-[37px] mt-2 relative flex items-center">
+  <div class="w-full h-[37px] mt-2 relative flex items-center" id="mmdf">
     <input
       type="text"
       id="searchInp"
@@ -46,6 +51,17 @@ export function renderHTML(products) {
       class="fa-solid fa-magnifying-glass absolute left-[14px] text-[#6C757D] text-[18px]"
     ></i>
     <i class="fa-solid fa-bars-progress absolute right-[14px]" onclick="search()"></i>
+    <div class="absolute w-full z-10 bg-gray-300 top-[37px] hidden flex-col gap-y-3 p-3" id="searchMod">
+    ${historySearch
+      .map((item) => {
+        return `
+      <div onclick="gotoSearch(${item})">
+        <p>${item}</p>
+      </div>
+      `;
+      })
+      .join("")}
+    </div>
   </div>
   <div class="flex flex-wrap py-4 px-2 gap-x-[35px] gap-y-[28px] w-full h-[234px] justify-between">
     <div class="w-[61px] h-[91px] flex flex-col justify-between basis-[16%] brandIcon">
@@ -287,3 +303,21 @@ window.viweOrder = () => {
   router.navigate(`/orders/${orderNum}`);
   localStorage.removeItem("orderNum");
 };
+
+function searchHistory() {
+  const input = document.querySelector("#mmdf");
+  const search = document.querySelector("#searchMod");
+  input.querySelector("input").addEventListener("focus", () => {
+    search.classList.remove("hidden");
+    search.classList.add("flex");
+  });
+  input.addEventListener("focusout", () => {
+    search.classList.remove("flex");
+    search.classList.add("hidden");
+  });
+}
+
+window.gotoSearch = (search) => {
+  console.log(search);
+};
+// addEventListener("");

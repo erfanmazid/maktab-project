@@ -2,8 +2,11 @@ import { router, routes } from "../../main";
 
 export function signupPage() {
   const token = localStorage.getItem("accessToken") ?? false;
-  if (token) {
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
     router.navigate(routes.home);
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
   } else {
     document.querySelector("#app").innerHTML = `
   <div class="h-screen">

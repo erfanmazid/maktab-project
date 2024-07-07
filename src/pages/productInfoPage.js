@@ -11,13 +11,21 @@ let count = 0;
 let allCash = 0;
 
 export default async function productInfoPage(match) {
-  const id = match.data.id;
-  const data = await productData(id);
-  const slid = productSlider(data[0].images);
-  renderHTML(slid, data[0], id);
-  stylecolor();
-  styleSize();
-  addToCart(id, data[0]);
+  const token = localStorage.getItem("accessToken") ?? false;
+  const welcome = localStorage.getItem("welcome") ?? false;
+  if (token && welcome) {
+    const id = match.data.id;
+    const data = await productData(id);
+    const slid = productSlider(data[0].images);
+    renderHTML(slid, data[0], id);
+    stylecolor();
+    styleSize();
+    addToCart(id, data[0]);
+  } else if (welcome == false) {
+    router.navigate(routes.loading);
+  } else {
+    router.navigate(routes.login);
+  }
 }
 
 function renderHTML(slider, info, id) {
