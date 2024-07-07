@@ -55,8 +55,9 @@ export function renderHTML(products) {
     ${historySearch
       .map((item) => {
         return `
-      <div onclick="gotoSearch(${item})">
-        <p>${item}</p>
+      <div class="w-full flex justify-between items-center">
+        <p  onclick="gotoSearchItem('${item}')" id="nono">${item}</p>
+        <i class="fa-solid fa-trash" onclick="deleteSearch('${item}')"></i>
       </div>
       `;
       })
@@ -307,20 +308,30 @@ window.viweOrder = () => {
 function searchHistory() {
   const input = document.querySelector("#mmdf");
   const search = document.querySelector("#searchMod");
-  input.querySelector("input").addEventListener("focus", () => {
+  input.querySelector("input").addEventListener("focus", (e) => {
+    e.stopPropagation();
     search.classList.remove("hidden");
     search.classList.add("flex");
   });
-  input.addEventListener("focusout", () => {
-    search.classList.remove("flex");
-    search.classList.add("hidden");
+  document.addEventListener("click", (e) => {
+    if (e.target.id != "searchInp" && e.target.id != "nono") {
+      search.classList.remove("flex");
+      search.classList.add("hidden");
+    }
   });
 }
 
-window.gotoSearch = (search) => {
-  console.log(search);
+window.gotoSearchItem = (search) => {
+  router.navigate(routes.search + `?q=${search}`);
 };
 
 window.gotoWish = () => {
   router.navigate(routes.wishList);
+};
+
+window.deleteSearch = (item) => {
+  const searchHistory = JSON.parse(localStorage.searchHistory);
+  const newSearch = searchHistory.filter((search) => search != item);
+  localStorage.searchHistory = JSON.stringify(newSearch);
+  homePage();
 };
