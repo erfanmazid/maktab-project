@@ -82,7 +82,7 @@ function renderHtml(product, location) {
           </p>
         </div>
         <div class="flex gap-x-2 items-center text-[13px] text-gray-500">
-          <div class="w-4 h-4 rounded-full ${colorNeed.colorCode} border border-gray-200"></div>
+          <div class="w-4 h-4 rounded-full border border-gray-200" style="background-color: ${item.color}"></div>
           <p>${colorNeed.color_name}</p>
           <p>|</p>
           <p>Size = ${item.size}</p>
