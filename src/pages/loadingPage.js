@@ -9,6 +9,7 @@ export default function loadingPage() {
   } else {
     localStorage.searchHistory = JSON.stringify([]);
     localStorage.cartList = JSON.stringify([]);
+    localStorage.wishList = JSON.stringify([]);
     localStorage.shippingType = JSON.stringify({});
     document.querySelector("#app").innerHTML = `
         <div class="flex flex-col items-center h-screen">
