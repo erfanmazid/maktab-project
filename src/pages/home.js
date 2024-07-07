@@ -10,6 +10,7 @@ export default async function homePage(match, brand) {
     nav();
     optHome();
     icon();
+    orderShow();
   } else {
     router.navigate(routes.login);
   }
@@ -178,6 +179,32 @@ export function renderHTML(products) {
   </div>
 </div>
 
+<div
+  class="h-screen w-full bg-black bg-opacity-30 fixed top-0 left-0 justify-center items-center hidden"
+  id="orderModal"
+>
+  <div
+    class="w-[80%] h-[60%] rounded-[45px] bg-white p-6 flex flex-col gap-y-4 items-center"
+  >
+    <img src="/src/img/home/order.png" class="w-[80%]" alt="" />
+    <h1 class="font-bold text-[24px]">Order Successful!</h1>
+    <p>You have Successfuly made order</p>
+    <button
+      class="w-full bg-black text-white py-3 rounded-3xl font-semibold mt-3"
+      onclick="viweOrder()"
+    >
+      View Order
+    </button>
+    <button
+      class="w-full bg-gray-300 text-black py-3 rounded-3xl font-semibold -mt-2"
+      onclick="orderModalClose()"
+    >
+      close
+    </button>
+  </div>
+</div>
+
+
   `;
 }
 
@@ -237,4 +264,26 @@ window.search = () => {
 window.showItem = (id) => {
   document.querySelector("#app").innerHTML = "";
   router.navigate(`/product/${id}`);
+};
+
+function orderShow() {
+  const orderNum = localStorage.getItem("orderNum") ?? false;
+  if (orderNum) {
+    const modal = document.querySelector("#orderModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+}
+
+window.orderModalClose = () => {
+  const modal = document.querySelector("#orderModal");
+  modal.classList.remove("flex");
+  modal.classList.add("hidden");
+  localStorage.removeItem("orderNum");
+};
+
+window.viweOrder = () => {
+  const orderNum = localStorage.getItem("orderNum") ?? false;
+  router.navigate(`/orders/${orderNum}`);
+  localStorage.removeItem("orderNum");
 };
