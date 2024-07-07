@@ -109,6 +109,7 @@ window.confirm = async () => {
     localStorage.removeItem("shippingType");
     localStorage.removeItem("allcost");
     localStorage.cartList = JSON.stringify([]);
+    localStorage.orderNum = JSON.stringify(dataNeed.length + 1);
   } catch (e) {
     console.log(e);
   }
