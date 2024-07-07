@@ -63,6 +63,7 @@ function renderHTML(address) {
     <div class="w-full flex justify-center items-center mt-5">
       <button
         class="bg-gray-200 w-full rounded-[30px] py-[14px] font-semibold text-[14px]"
+        onclick="addAdress()"
       >
         Add New Address
       </button>
@@ -102,4 +103,8 @@ window.backCheckOut = async () => {
   localStorage.removeItem("address");
   localStorage.address = JSON.stringify(type);
   router.navigate(routes.checkout);
+};
+
+window.addAdress = () => {
+  router.navigate(routes.addAdress);
 };
