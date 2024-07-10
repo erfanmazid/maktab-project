@@ -414,6 +414,7 @@ window.numPlus = async (id) => {
   cartList[index].number++;
   localStorage.cartList = JSON.stringify(cartList);
   renderHtml(info);
+  nav();
 };
 
 window.numMines = async (id) => {
@@ -424,6 +425,7 @@ window.numMines = async (id) => {
   if (cartList[index].number == 0) removeproduct(id);
   localStorage.cartList = JSON.stringify(cartList);
   renderHtml(info);
+  nav();
 };
 
 window.checkbtn = () => {
