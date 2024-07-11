@@ -12,10 +12,12 @@ export default async function searchPage(e) {
     const prod = await productData(e.params.q);
     if (prod.length == 0) {
       renderHTML(e, prod);
+      nav();
       let inp = document.querySelector("#searchInp");
       inp.value = e.params.q;
     } else {
       renderHTMLFound(e, prod);
+      nav();
       let inp = document.querySelector("#searchInp");
       inp.value = e.params.q;
     }
@@ -70,7 +72,7 @@ function renderHTML(e, prod) {
 
 function renderHTMLFound(e, prod) {
   document.querySelector("#app").innerHTML = `
-    <div class="flex flex-col justify-start items-center h-screen pt-4">
+    <div class="flex flex-col justify-start items-center h-screen pt-4 relative">
     <div class="w-[380px] mt-2 relative flex items-center">
       <input
         type="text"
@@ -93,9 +95,9 @@ function renderHTMLFound(e, prod) {
       </p>
       <p><span>${prod.length}</span> founds</p>
     </div>
-    <div class="flex flex-col gap-y-3 w-full">
+    <div class="flex h-[85%] flex-col gap-y-3 w-full">
     <div
-      class="flex flex-wrap gap-5 p-5 overflow-y-auto items-center no-scrollbar"
+      class="flex flex-wrap gap-5 p-5 overflow-y-scroll items-center no-scrollbar pb-[79px]"
     >
     ${prod
       .map((product) => {
@@ -116,8 +118,37 @@ function renderHTMLFound(e, prod) {
       .join("")}
     </div>
   </div>
-  </div>
   
+    <div
+    class="px-6 pt-6 pb-[10px] w-full absolute bottom-0 bg-white left-0 flex flex-col justify-center items-center rounded-t-[35px] border border-gray-200"
+  >
+    <nav>
+      <ul class="flex gap-x-[44px]">
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar active">
+            <i class="fa-solid fa-house text-[24px]"></i>
+            <p class="text-[10px] font-semibold">Home</p>
+        </li>
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
+            <i class="fa-solid fa-bag-shopping text-[24px]"></i>
+            <p class="text-[10px] font-semibold">cart</p>
+        </li>
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
+            <i class="fa-solid fa-cart-shopping text-[24px]"></i>
+            <p class="text-[10px] font-semibold">Orders</p>
+        </li>
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
+            <i class="fa-solid fa-wallet text-[24px]"></i>
+            <p class="text-[10px] font-semibold">Wallet</p>
+        </li>
+        <li class="flex flex-col justify-center items-center gap-y-1 text-gray-400 bar">
+            <i class="fa-solid fa-user text-[24px]"></i>
+            <p class="text-[10px] font-semibold">Profile</p>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>  
+
       `;
 }
 
@@ -136,3 +167,16 @@ async function productData(b) {
   const data = await axios.get(`/products?${serch}`);
   return data.data;
 }
+
+window.nav = () => {
+  const bars = document.querySelectorAll(".bar");
+  bars.forEach((items) => {
+    items.addEventListener("click", () => {
+      document.querySelector(".active").classList.remove("active");
+      items.classList.add("active");
+      const pageName = items.querySelector("p").innerHTML;
+      const newPage = pageName.toLocaleLowerCase();
+      router.navigate(`/${newPage}`);
+    });
+  });
+};
