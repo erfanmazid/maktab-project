@@ -13,6 +13,7 @@ export default async function homePage(match, brand) {
     icon();
     orderShow();
     searchHistory();
+    timeShow();
   } else if (welcome == false) {
     router.navigate(routes.loading);
   } else {
@@ -31,7 +32,7 @@ export function renderHTML(products) {
         <img src="src/img/home/profile.png" alt="" class="w-12" />
       </div>
       <div class="flex flex-col justify-between">
-        <p class="text-[#757475]">Good Morning 👋</p>
+        <p class="text-[#757475]"><span id="welcomeTime">Good Morning</span> 👋</p>
         <p class="pt-1 w-[130px] overflow-hidden text-ellipsis text-nowrap">${email}</p>
       </div>
     </div>
@@ -335,3 +336,18 @@ window.deleteSearch = (item) => {
   localStorage.searchHistory = JSON.stringify(newSearch);
   homePage();
 };
+
+function timeShow() {
+  const text = document.querySelector("#welcomeTime");
+  const time = new Date();
+  const hour = time.getHours();
+  if (hour >= 0 && hour <= 10) {
+    text.textContent = "Good morning";
+  } else if (hour >= 11 && hour <= 15) {
+    text.textContent = "Good afternoon";
+  } else if (hour >= 16 && hour <= 19) {
+    text.textContent = "Good enening";
+  } else if (hour >= 20 && hour <= 0) {
+    text.textContent = "Good night";
+  }
+}
